@@ -1,0 +1,120 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * TRADE STREAM SECURITY RULES
+     * 
+     * Core Philosophy: 
+     * This ruleset implements a strict path-based and field-based ownership model. 
+     * Access is strictly partitioned so that private financial data (Trades) remains 
+     * accessible only to the owner, while social structures (Follows) and profiles 
+     * are accessible to authenticated users to facilitate platform interaction.
+     *
+     * Data Structure:
+     * - /users/{userId}: Root profile for each user.
+     * - /users/{userId}/trades/{tradeId}: Private subcollection for a user's stock options trades.
+     * - /follows/{followId}: Flat collection tracking social relationships between users.
+     * - /sentiment_analyses/{id}: Global analytical data, restricted to authorized viewers.
+     *
+     * Key Security Decisions:
+     * 1. Path-Based Authorization: User data and trades rely on the {userId} path parameter 
+     *    matching the authenticated UID for write operations.
+     * 2. Relational Integrity: On creation of trades and follows, the rules enforce that 
+     *    the 'userId' or 'followerId' in the document body matches the requester's UID.
+     * 3. Read Segregation: Trades are entirely private. Profiles and follow records 
+     *    are readable by authenticated users to allow the social following feature to function.
+     * 4. System Data: Sentiment Analysis is treated as read-only for users, as it is 
+     *    intended to be populated by backend processes or admins.
+     *
+     * Denormalization for Authorization:
+     * Ownership fields (like followerId and userId) are required within the document 
+     * bodies to ensure rules can validate ownership during creation and updates 
+     * without performing additional document lookups (get() calls).
+     */
+
+    // --- Helper Functions ---
+
+    /** @description Checks if the requester is authenticated. */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /** @description Checks if the requester's UID matches the provided userId. */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /** @description Checks if the document exists and the requester is the owner. */
+    function isExistingOwner(userId) {
+      return resource != null && isOwner(userId);
+    }
+
+    // --- Collection Rules ---
+
+    /**
+     * @description Rules for the User profile documents.
+     * @path /users/{userId}
+     * @allow (get) Any authenticated user can view a profile.
+     * @allow (create, update) Users can only manage their own profile.
+     * @deny (list) Prevent broad scraping of the user directory.
+     * @principle Path-based ownership for writes; Public-auth for profile discovery.
+     */
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if false;
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if false; // Profiles are typically deactivated, not hard-deleted.
+
+      /**
+       * @description Rules for private trade data.
+       * @path /users/{userId}/trades/{tradeId}
+       * @allow (all) Access is restricted strictly to the path owner.
+       * @deny (all) Any user who does not own the parent {userId} path.
+       * @principle Strict subcollection ownership.
+       */
+      match /trades/{tradeId} {
+        allow get, list: if isOwner(userId);
+        allow create: if isOwner(userId) && request.resource.data.userId == userId;
+        allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+        allow delete: if isExistingOwner(userId);
+      }
+    }
+
+    /**
+     * @description Rules for follow relationships between users.
+     * @path /follows/{followId}
+     * @allow (create) User matches the 'followerId' in the document.
+     * @allow (delete) User matches the 'followerId' of the existing record.
+     * @allow (get, list) Any signed-in user (to see who follows whom).
+     * @deny (update) Follow records are immutable; delete and recreate instead.
+     * @principle Field-based ownership for write operations.
+     */
+    match /follows/{followId} {
+      allow get, list: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.followerId == request.auth.uid;
+      allow update: if false; 
+      allow delete: if isSignedIn() && resource.data.followerId == request.auth.uid;
+    }
+
+    /**
+     * @description Rules for aggregate sentiment analysis data.
+     * @path /sentiment_analyses/{sentimentAnalysisId}
+     * @allow (get, list) Signed-in users.
+     * @deny (write) General users cannot modify sentiment analysis data.
+     * @principle Read-only system data for end-users.
+     */
+    match /sentiment_analyses/{sentimentAnalysisId} {
+      // NOTE: The IR mentions "available to subscribers only". 
+      // Since a 'subscriber' flag is not yet defined in the User entity, 
+      // we default to all signed-in users for prototyping.
+      allow get, list: if isSignedIn(); 
+      
+      // CRITICAL: Sentiment analysis is typically generated by a backend process.
+      // Prototyping Mode: Deny all client-side writes to maintain data integrity.
+      allow create, update, delete: if false; 
+    }
+
+  }
+}

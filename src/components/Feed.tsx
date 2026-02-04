@@ -1,11 +1,10 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
 import { MOCK_TRADES } from "@/lib/mock-data";
 import { TradeCard } from "./TradeCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Filter, SlidersHorizontal, ArrowDownWideArrow } from "lucide-react";
+import { Filter, SlidersHorizontal, ArrowDownWideNarrow } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Feed() {
@@ -55,7 +54,7 @@ export function Feed() {
       <div className="divide-y divide-border">
         <div className="p-4 border-b border-border flex items-center gap-2 overflow-x-auto scrollbar-hide">
           <Button variant="outline" size="sm" className="rounded-full text-xs font-bold gap-2 bg-muted/50 border-none shrink-0">
-            <ArrowDownWideArrow className="h-3 w-3" />
+            <ArrowDownWideNarrow className="h-3 w-3" />
             Ticker
           </Button>
           <Button variant="outline" size="sm" className="rounded-full text-xs font-bold gap-2 bg-muted/50 border-none shrink-0">

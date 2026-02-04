@@ -1,3 +1,22 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "trader-1",
+      "description": "Professional trader avatar",
+      "imageUrl": "https://images.unsplash.com/photo-1562788869-4ed32648eb72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwcm9mZXNzaW9uYWwlMjBtYW58ZW58MHx8fHwxNzcwMTQyNzI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional man"
+    },
+    {
+      "id": "trader-2",
+      "description": "Female trader avatar",
+      "imageUrl": "https://images.unsplash.com/photo-1573496358961-3c82861ab8f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwcm9mZXNzaW9uYWwlMjB3b21hbnxlbnwwfHx8fDE3NzAyMTMyNjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional woman"
+    },
+    {
+      "id": "trader-3",
+      "description": "Market analyst avatar",
+      "imageUrl": "https://images.unsplash.com/photo-1695048441269-b33942d1fd31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzdG9jayUyMGFuYWx5c3R8ZW58MHx8fHwxNzcwMjIxNzk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "stock analyst"
+    }
+  ]
 }

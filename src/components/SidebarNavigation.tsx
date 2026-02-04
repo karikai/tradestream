@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { icon: TrendingUp, label: "Trends", href: "/trends" },
   { icon: Bell, label: "Notifications", href: "/notifications" },
   { icon: Mail, label: "Messages", href: "/messages" },
-  { icon: Bookmark, label: "Bookmarks", href: "#" },
+  { icon: Bookmark, label: "Bookmarks", href: "/bookmarks" },
   { icon: User, label: "Profile", href: "/profile/johndoe_trading" },
   { icon: Settings, label: "Settings", href: "#" },
 ];

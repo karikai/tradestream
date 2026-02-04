@@ -3,12 +3,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Hash, Bell, Mail, Bookmark, User, Settings, Zap, TrendingUp, MoreHorizontal } from "lucide-react";
+import { Home, Search, Bell, Mail, Bookmark, User, Settings, Zap, TrendingUp, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const NAV_ITEMS = [
   { icon: Home, label: "Home", href: "/" },
+  { icon: Search, label: "Search", href: "/search" },
   { icon: TrendingUp, label: "Trends", href: "/trends" },
   { icon: Bell, label: "Notifications", href: "/notifications" },
   { icon: Mail, label: "Messages", href: "/messages" },

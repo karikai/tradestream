@@ -39,10 +39,18 @@ export interface Notification {
   tradeId?: string;
 }
 
+export interface Message {
+  id: string;
+  senderId: string;
+  text: string;
+  timestamp: string;
+}
+
 export interface MessageThread {
   id: string;
   user: User;
   lastMessage: string;
   timestamp: string;
   unread: boolean;
+  messages: Message[];
 }

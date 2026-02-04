@@ -11,6 +11,7 @@ import { Mail, Search, Settings, Verified } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function MessagesPage() {
   return (
@@ -48,10 +49,11 @@ export default function MessagesPage() {
           <div className="divide-y divide-border">
             {MOCK_MESSAGE_THREADS.length > 0 ? (
               MOCK_MESSAGE_THREADS.map((thread) => (
-                <div 
+                <Link 
                   key={thread.id} 
+                  href={`/messages/${thread.id}`}
                   className={cn(
-                    "p-4 flex gap-4 transition-colors cursor-pointer hover:bg-muted/30 border-l-4",
+                    "p-4 flex gap-4 transition-colors cursor-pointer hover:bg-muted/30 border-l-4 block",
                     thread.unread ? "border-primary bg-primary/5" : "border-transparent"
                   )}
                 >
@@ -78,7 +80,7 @@ export default function MessagesPage() {
                       {thread.lastMessage}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))
             ) : (
               <div className="p-12 text-center text-muted-foreground">

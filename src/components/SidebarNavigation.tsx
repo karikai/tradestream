@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 const NAV_ITEMS = [
   { icon: Home, label: "Home", href: "/" },
   { icon: TrendingUp, label: "Trends", href: "#" },
-  { icon: Bell, label: "Notifications", href: "#" },
+  { icon: Bell, label: "Notifications", href: "/notifications" },
   { icon: Mail, label: "Messages", href: "#" },
   { icon: Bookmark, label: "Bookmarks", href: "#" },
   { icon: User, label: "Profile", href: "/profile/johndoe_trading" },

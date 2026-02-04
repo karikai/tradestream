@@ -1,5 +1,5 @@
 
-import { Trade, User } from './types';
+import { Trade, User, Notification } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
 export const MOCK_USERS: User[] = [
@@ -120,4 +120,49 @@ export const MOCK_TRADES: Trade[] = [
     timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
     sentiment: 'bearish',
   },
+];
+
+export const MOCK_NOTIFICATIONS: Notification[] = [
+  {
+    id: 'n1',
+    type: 'like',
+    user: MOCK_USERS[0],
+    message: 'liked your trade on $AAPL',
+    timestamp: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
+    read: false,
+    tradeId: 't1',
+  },
+  {
+    id: 'n2',
+    type: 'follow',
+    user: MOCK_USERS[1],
+    message: 'started following you',
+    timestamp: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
+    read: false,
+  },
+  {
+    id: 'n3',
+    type: 'repost',
+    user: MOCK_USERS[2],
+    message: 'reposted your whale alert on $NVDA',
+    timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+    read: true,
+    tradeId: 't3',
+  },
+  {
+    id: 'n4',
+    type: 'system',
+    message: 'Welcome to TradeStream! Start following top traders to see their activity.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    read: true,
+  },
+  {
+    id: 'n5',
+    type: 'like',
+    user: MOCK_USERS[1],
+    message: 'liked your trade on $TSLA',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    read: true,
+    tradeId: 't2',
+  }
 ];

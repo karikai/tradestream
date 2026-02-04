@@ -25,3 +25,15 @@ export interface Trade {
   timestamp: string;
   sentiment?: 'bullish' | 'bearish' | 'neutral';
 }
+
+export type NotificationType = 'like' | 'repost' | 'follow' | 'system';
+
+export interface Notification {
+  id: string;
+  type: NotificationType;
+  user?: User;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  tradeId?: string;
+}

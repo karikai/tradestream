@@ -1,4 +1,3 @@
-
 "use client";
 
 import { use } from "react";
@@ -73,8 +72,8 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
             </div>
           </div>
 
-          {/* User Info */}
-          <div className="mt-8 px-4 space-y-4 pb-4 border-b border-border">
+          {/* User Info - Increased mt to clear the avatar overlap */}
+          <div className="mt-16 px-4 space-y-4 pb-4 border-b border-border">
             <div>
               <h2 className="text-xl font-black font-headline tracking-tighter flex items-center gap-1">
                 {user.name}

@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
-import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified, Flame } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified, Flame, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -100,6 +100,11 @@ export function TradeCard({ trade }: TradeCardProps) {
                   <Heart className="h-4 w-4" />
                 </div>
                 <span className="text-xs">45</span>
+              </button>
+              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group">
+                <div className="p-2 rounded-full group-hover:bg-primary/10">
+                  <Bookmark className="h-4 w-4" />
+                </div>
               </button>
               <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group">
                 <div className="p-2 rounded-full group-hover:bg-primary/10">

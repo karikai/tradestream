@@ -44,10 +44,6 @@ export function SidebarNavigation() {
               <span className="hidden lg:inline">{item.label}</span>
             </Link>
           ))}
-          <Button variant="ghost" className="w-full flex justify-start items-center gap-4 px-4 py-3 rounded-full text-lg font-medium text-muted-foreground hover:bg-muted group">
-            <MoreHorizontal className="h-6 w-6" />
-            <span className="hidden lg:inline">More</span>
-          </Button>
         </nav>
 
         <Button className="w-full rounded-full py-6 text-lg font-bold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20">

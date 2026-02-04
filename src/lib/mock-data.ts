@@ -1,5 +1,5 @@
 
-import { Trade, User, Notification } from './types';
+import { Trade, User, Notification, MessageThread } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
 export const MOCK_USERS: User[] = [
@@ -170,5 +170,29 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
     read: true,
     tradeId: 't2',
+  }
+];
+
+export const MOCK_MESSAGE_THREADS: MessageThread[] = [
+  {
+    id: 'm1',
+    user: MOCK_USERS[0],
+    lastMessage: 'Did you see that volume on $NVDA calls? Absolute insanity.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    unread: true,
+  },
+  {
+    id: 'm2',
+    user: MOCK_USERS[1],
+    lastMessage: 'The iron condor strategy is working perfectly in this range.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+    unread: false,
+  },
+  {
+    id: 'm3',
+    user: MOCK_USERS[2],
+    lastMessage: 'Thanks for the alert! Followed that whale into the $META trade.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
+    unread: false,
   }
 ];

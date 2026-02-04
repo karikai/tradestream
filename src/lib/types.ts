@@ -38,3 +38,11 @@ export interface Notification {
   read: boolean;
   tradeId?: string;
 }
+
+export interface MessageThread {
+  id: string;
+  user: User;
+  lastMessage: string;
+  timestamp: string;
+  unread: boolean;
+}

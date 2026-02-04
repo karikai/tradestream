@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
 import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface TradeCardProps {
   trade: Trade;
@@ -19,17 +20,23 @@ export function TradeCard({ trade }: TradeCardProps) {
   return (
     <Card className="rounded-none border-x-0 border-t-0 shadow-none hover:bg-muted/30 transition-colors cursor-pointer p-4 group">
       <div className="flex gap-3">
-        <Avatar className="h-10 w-10 shrink-0">
-          <AvatarImage src={trade.user.avatar} alt={trade.user.name} />
-          <AvatarFallback>{trade.user.name.charAt(0)}</AvatarFallback>
-        </Avatar>
+        <Link href={`/profile/${trade.user.handle}`} className="shrink-0" onClick={(e) => e.stopPropagation()}>
+          <Avatar className="h-10 w-10">
+            <AvatarImage src={trade.user.avatar} alt={trade.user.name} />
+            <AvatarFallback>{trade.user.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </Link>
         
         <div className="flex-1 space-y-1">
           <div className="flex items-center gap-1">
-            <span className="font-bold text-sm hover:underline flex items-center gap-0.5">
+            <Link 
+              href={`/profile/${trade.user.handle}`} 
+              className="font-bold text-sm hover:underline flex items-center gap-0.5"
+              onClick={(e) => e.stopPropagation()}
+            >
               {trade.user.name}
               {trade.user.verified && <Verified className="h-3.5 w-3.5 text-primary fill-primary text-primary-foreground" />}
-            </span>
+            </Link>
             <span className="text-muted-foreground text-sm">@{trade.user.handle}</span>
             <span className="text-muted-foreground text-sm">·</span>
             <span className="text-muted-foreground text-sm hover:underline">

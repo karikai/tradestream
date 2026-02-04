@@ -13,7 +13,7 @@ const NAV_ITEMS = [
   { icon: Bell, label: "Notifications", href: "#" },
   { icon: Mail, label: "Messages", href: "#" },
   { icon: Bookmark, label: "Bookmarks", href: "#" },
-  { icon: User, label: "Profile", href: "#" },
+  { icon: User, label: "Profile", href: "/profile/johndoe_trading" },
   { icon: Settings, label: "Settings", href: "#" },
 ];
 
@@ -57,7 +57,7 @@ export function SidebarNavigation() {
       </div>
 
       <div className="mt-auto pb-4">
-        <button className="flex items-center gap-3 p-3 w-full rounded-full hover:bg-muted transition-colors text-left">
+        <Link href="/profile/johndoe_trading" className="flex items-center gap-3 p-3 w-full rounded-full hover:bg-muted transition-colors text-left">
           <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-bold">
             JD
           </div>
@@ -66,7 +66,7 @@ export function SidebarNavigation() {
             <p className="text-muted-foreground text-xs text-nowrap overflow-hidden text-ellipsis">@johndoe_trading</p>
           </div>
           <MoreHorizontal className="h-4 w-4 ml-auto text-muted-foreground hidden lg:block" />
-        </button>
+        </Link>
       </div>
     </div>
   );

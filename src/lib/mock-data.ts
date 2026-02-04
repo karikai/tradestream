@@ -9,6 +9,10 @@ export const MOCK_USERS: User[] = [
     handle: 'arivera_trades',
     avatar: PlaceHolderImages[0].imageUrl,
     verified: true,
+    bio: 'Macro options trader focused on tech and energy sectors. 10 years in the game.',
+    joinedDate: '2021-03-12',
+    followers: 12400,
+    following: 156,
   },
   {
     id: 'u2',
@@ -16,13 +20,31 @@ export const MOCK_USERS: User[] = [
     handle: 'optionsqueen',
     avatar: PlaceHolderImages[1].imageUrl,
     verified: true,
+    bio: 'Volatility specialist. Selling premium and managing risk. I love iron condors.',
+    joinedDate: '2022-01-05',
+    followers: 8900,
+    following: 432,
   },
   {
     id: 'u3',
     name: 'Market Whiz',
     handle: 'marketwhiz',
     avatar: PlaceHolderImages[2].imageUrl,
+    bio: 'Searching for whales and unusual options activity. Data-driven only.',
+    joinedDate: '2023-11-20',
+    followers: 3200,
+    following: 89,
   },
+  {
+    id: 'u4',
+    name: 'John Doe',
+    handle: 'johndoe_trading',
+    avatar: 'https://picsum.photos/seed/jd/200/200',
+    bio: 'Professional coffee drinker and part-time index trader.',
+    joinedDate: '2024-02-14',
+    followers: 120,
+    following: 45,
+  }
 ];
 
 export const MOCK_TRADES: Trade[] = [
@@ -84,6 +106,18 @@ export const MOCK_TRADES: Trade[] = [
     size: 75,
     price: 3.25,
     timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
+    sentiment: 'bearish',
+  },
+  {
+    id: 't6',
+    user: MOCK_USERS[0],
+    ticker: 'NVDA',
+    optionType: 'put',
+    strikePrice: 130,
+    expirationDate: '2025-03-28',
+    size: 25,
+    price: 4.15,
+    timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
     sentiment: 'bearish',
   },
 ];

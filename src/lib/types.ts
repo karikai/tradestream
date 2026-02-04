@@ -7,6 +7,10 @@ export interface User {
   handle: string;
   avatar: string;
   verified?: boolean;
+  bio?: string;
+  joinedDate?: string;
+  followers?: number;
+  following?: number;
 }
 
 export interface Trade {

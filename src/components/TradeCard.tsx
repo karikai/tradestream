@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
-import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -56,6 +56,12 @@ export function TradeCard({ trade }: TradeCardProps) {
               <span className="text-sm font-medium">
                 ${trade.strikePrice} Exp {new Date(trade.expirationDate).toLocaleDateString()}
               </span>
+              {trade.returnPercentage && trade.returnPercentage > 0 && (
+                <Badge variant="outline" className="ml-auto border-accent/20 bg-accent/5 text-accent font-black gap-1 text-[10px]">
+                  <Flame className="h-3 w-3 fill-accent" />
+                  +{trade.returnPercentage}%
+                </Badge>
+              )}
             </div>
             
             <div className="grid grid-cols-2 gap-4 bg-muted/20 p-3 rounded-lg border border-border/50">

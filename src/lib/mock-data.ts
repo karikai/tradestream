@@ -59,6 +59,7 @@ export const MOCK_TRADES: Trade[] = [
     price: 12.45,
     timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
     sentiment: 'bullish',
+    returnPercentage: 145,
   },
   {
     id: 't2',
@@ -71,6 +72,7 @@ export const MOCK_TRADES: Trade[] = [
     price: 8.12,
     timestamp: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
     sentiment: 'bearish',
+    returnPercentage: 82,
   },
   {
     id: 't3',
@@ -83,6 +85,7 @@ export const MOCK_TRADES: Trade[] = [
     price: 145.20,
     timestamp: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
     sentiment: 'bullish',
+    returnPercentage: 420,
   },
   {
     id: 't4',
@@ -95,6 +98,7 @@ export const MOCK_TRADES: Trade[] = [
     price: 45.60,
     timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
     sentiment: 'bullish',
+    returnPercentage: 12,
   },
   {
     id: 't5',
@@ -107,6 +111,7 @@ export const MOCK_TRADES: Trade[] = [
     price: 3.25,
     timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
     sentiment: 'bearish',
+    returnPercentage: -15,
   },
   {
     id: 't6',
@@ -119,6 +124,7 @@ export const MOCK_TRADES: Trade[] = [
     price: 4.15,
     timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
     sentiment: 'bearish',
+    returnPercentage: 310,
   },
 ];
 

@@ -24,6 +24,7 @@ export interface Trade {
   price: number;
   timestamp: string;
   sentiment?: 'bullish' | 'bearish' | 'neutral';
+  returnPercentage?: number;
 }
 
 export type NotificationType = 'like' | 'repost' | 'follow' | 'system';

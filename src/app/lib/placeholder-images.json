@@ -1,0 +1,23 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "trader-1",
+      "description": "Professional trader avatar",
+      "imageUrl": "https://picsum.photos/seed/trader1/200/200",
+      "imageHint": "professional man"
+    },
+    {
+      "id": "trader-2",
+      "description": "Female trader avatar",
+      "imageUrl": "https://picsum.photos/seed/trader2/200/200",
+      "imageHint": "professional woman"
+    },
+    {
+      "id": "trader-3",
+      "description": "Market analyst avatar",
+      "imageUrl": "https://picsum.photos/seed/trader3/200/200",
+      "imageHint": "stock analyst"
+    }
+  ]
+}

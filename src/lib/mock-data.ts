@@ -1,5 +1,5 @@
 
-import { Trade, User, Notification, MessageThread } from './types';
+import { Trade, User, Notification, MessageThread, Group, Membership } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
 export const MOCK_USERS: User[] = [
@@ -44,6 +44,36 @@ export const MOCK_USERS: User[] = [
     joinedDate: '2024-02-14',
     followers: 120,
     following: 45,
+  }
+];
+
+export const MOCK_GROUPS: Group[] = [
+  {
+    id: 'g1',
+    name: 'Whale Alerts Pro',
+    description: 'Real-time tracking of the biggest options orders in the market.',
+    creator: MOCK_USERS[0],
+    monthlyPrice: 49.99,
+    avatar: 'https://picsum.photos/seed/whale/200/200',
+    memberCount: 1240,
+  },
+  {
+    id: 'g2',
+    name: 'Volatility Masters',
+    description: 'Learn to trade iron condors and credit spreads for consistent income.',
+    creator: MOCK_USERS[1],
+    monthlyPrice: 29.99,
+    avatar: 'https://picsum.photos/seed/vol/200/200',
+    memberCount: 850,
+  }
+];
+
+export const MOCK_MEMBERSHIPS: Membership[] = [
+  {
+    id: 'mem1',
+    groupId: 'g1',
+    userId: 'u4',
+    expiresAt: '2025-12-31T23:59:59Z'
   }
 ];
 
@@ -161,15 +191,6 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
     message: 'Welcome to TradeStream! Start following top traders to see their activity.',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
     read: true,
-  },
-  {
-    id: 'n5',
-    type: 'like',
-    user: MOCK_USERS[1],
-    message: 'liked your trade on $TSLA',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-    read: true,
-    tradeId: 't2',
   }
 ];
 
@@ -195,17 +216,6 @@ export const MOCK_MESSAGE_THREADS: MessageThread[] = [
     messages: [
       { id: 'ms4', senderId: 'u2', text: 'Volatility is crushing right now.', timestamp: new Date(Date.now() - 1000 * 60 * 150).toISOString() },
       { id: 'ms5', senderId: 'u2', text: 'The iron condor strategy is working perfectly in this range.', timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString() },
-    ]
-  },
-  {
-    id: 'm3',
-    user: MOCK_USERS[2],
-    lastMessage: 'Thanks for the alert! Followed that whale into the $META trade.',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
-    unread: false,
-    messages: [
-      { id: 'ms6', senderId: 'u4', text: 'Just posted a whale alert on $META.', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString() },
-      { id: 'ms7', senderId: 'u3', text: 'Thanks for the alert! Followed that whale into the $META trade.', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString() },
     ]
   }
 ];

@@ -13,6 +13,23 @@ export interface User {
   following?: number;
 }
 
+export interface Group {
+  id: string;
+  name: string;
+  description: string;
+  creator: User;
+  monthlyPrice: number;
+  avatar: string;
+  memberCount: number;
+}
+
+export interface Membership {
+  id: string;
+  groupId: string;
+  userId: string;
+  expiresAt: string;
+}
+
 export interface Trade {
   id: string;
   user: User;
@@ -25,6 +42,7 @@ export interface Trade {
   timestamp: string;
   sentiment?: 'bullish' | 'bearish' | 'neutral';
   returnPercentage?: number;
+  groupId?: string; // Optional: linked to a group
 }
 
 export type NotificationType = 'like' | 'repost' | 'follow' | 'system';

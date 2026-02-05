@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "User": {
@@ -49,15 +50,15 @@
         },
         "userId": {
           "type": "string",
-          "description": "Reference to User. (Relationship: User 1:N Trade).  The user who made the trade."
+          "description": "Reference to User. The user who made the trade."
         },
         "ticker": {
           "type": "string",
-          "description": "The stock ticker symbol (e.g., AAPL, GOOGL)."
+          "description": "The stock ticker symbol."
         },
         "optionType": {
           "type": "string",
-          "description": "The type of option (e.g., call, put)."
+          "description": "The type of option (call, put)."
         },
         "expirationDate": {
           "type": "string",
@@ -70,7 +71,7 @@
         },
         "tradeSize": {
           "type": "number",
-          "description": "The size of the trade (number of contracts)."
+          "description": "The size of the trade."
         },
         "tradePrice": {
           "type": "number",
@@ -80,6 +81,10 @@
           "type": "string",
           "description": "The timestamp when the trade was executed.",
           "format": "date-time"
+        },
+        "groupId": {
+          "type": "string",
+          "description": "Optional reference to a Group if the trade is exclusive to a group."
         }
       },
       "required": [
@@ -94,82 +99,85 @@
         "timestamp"
       ]
     },
+    "Group": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Group",
+      "type": "object",
+      "description": "Represents a subscription-based group created by a trader.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "creatorId": {
+          "type": "string",
+          "description": "The user ID of the creator."
+        },
+        "monthlyPrice": {
+          "type": "number"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "memberCount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "creatorId",
+        "monthlyPrice"
+      ]
+    },
+    "Membership": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Membership",
+      "type": "object",
+      "description": "Represents a user's active subscription to a group.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "groupId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "groupId",
+        "userId",
+        "expiresAt"
+      ]
+    },
     "Follow": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Follow",
       "type": "object",
       "description": "Represents the following relationship between users.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Follow entity."
-        },
-        "followerId": {
-          "type": "string",
-          "description": "Reference to User. (Relationship: User 1:N Follow). The user who is following."
-        },
-        "followingId": {
-          "type": "string",
-          "description": "Reference to User. (Relationship: User 1:N Follow). The user who is being followed."
-        },
-        "createdAt": {
-          "type": "string",
-          "description": "The timestamp when the follow relationship was created.",
-          "format": "date-time"
-        }
+        "id": { "type": "string" },
+        "followerId": { "type": "string" },
+        "followingId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
       },
-      "required": [
-        "id",
-        "followerId",
-        "followingId",
-        "createdAt"
-      ]
-    },
-    "SentimentAnalysis": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "SentimentAnalysis",
-      "type": "object",
-      "description": "Represents the sentiment analysis of a stock or option.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the SentimentAnalysis entity."
-        },
-        "ticker": {
-          "type": "string",
-          "description": "The stock ticker symbol (e.g., AAPL, GOOGL) for which the sentiment is analyzed."
-        },
-        "analysisTimestamp": {
-          "type": "string",
-          "description": "The timestamp when the sentiment analysis was performed.",
-          "format": "date-time"
-        },
-        "sentimentScore": {
-          "type": "number",
-          "description": "The sentiment score, ranging from -1 (bearish) to 1 (bullish)."
-        },
-        "tradeIds": {
-          "type": "array",
-          "description": "References to Trades. (Relationship: SentimentAnalysis 1:N Trade). Trades used to perform sentiment analysis.",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "id",
-        "ticker",
-        "analysisTimestamp",
-        "sentimentScore",
-        "tradeIds"
-      ]
+      "required": ["id", "followerId", "followingId", "createdAt"]
     }
   },
   "auth": {
-    "providers": [
-      "password",
-      "anonymous"
-    ]
+    "providers": ["password", "anonymous"]
   },
   "firestore": {
     "structure": [
@@ -177,71 +185,34 @@
         "path": "/users/{userId}",
         "definition": {
           "entityName": "User",
-          "schema": {
-            "$ref": "#/backend/entities/User"
-          },
-          "description": "Stores user profile data.  The 'userId' path parameter is used for authorization.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The unique identifier of the user."
-            }
-          ]
+          "schema": { "$ref": "#/backend/entities/User" },
+          "description": "User profiles."
         }
       },
       {
         "path": "/users/{userId}/trades/{tradeId}",
         "definition": {
           "entityName": "Trade",
-          "schema": {
-            "$ref": "#/backend/entities/Trade"
-          },
-          "description": "Stores trade data for a specific user. The 'userId' path parameter is used for authorization.  Only the user with the matching userId can read or write trades under their path.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The unique identifier of the user who owns the trade."
-            },
-            {
-              "name": "tradeId",
-              "description": "The unique identifier of the trade."
-            }
-          ]
+          "schema": { "$ref": "#/backend/entities/Trade" },
+          "description": "Personal trades for a user."
         }
       },
       {
-        "path": "/follows/{followId}",
+        "path": "/groups/{groupId}",
         "definition": {
-          "entityName": "Follow",
-          "schema": {
-            "$ref": "#/backend/entities/Follow"
-          },
-          "description": "Stores follow relationships between users. Used for retrieving follower/following information.",
-          "params": [
-            {
-              "name": "followId",
-              "description": "The unique identifier of the follow relationship."
-            }
-          ]
+          "entityName": "Group",
+          "schema": { "$ref": "#/backend/entities/Group" },
+          "description": "Exclusive trading groups."
         }
       },
       {
-        "path": "/sentiment_analyses/{sentimentAnalysisId}",
+        "path": "/groups/{groupId}/memberships/{userId}",
         "definition": {
-          "entityName": "SentimentAnalysis",
-          "schema": {
-            "$ref": "#/backend/entities/SentimentAnalysis"
-          },
-          "description": "Stores sentiment analysis data for stocks and options. Sentiment analysis is available to subscribers only.",
-          "params": [
-            {
-              "name": "sentimentAnalysisId",
-              "description": "The unique identifier of the sentiment analysis."
-            }
-          ]
+          "entityName": "Membership",
+          "schema": { "$ref": "#/backend/entities/Membership" },
+          "description": "Active group subscriptions."
         }
       }
-    ],
-    "reasoning": "The Firestore data structure is designed to support TradeStream's core features, emphasizing security, scalability, and efficient querying.  The design adheres to the principle of Authorization Independence by denormalizing relevant authorization data. Path-based ownership is used for User and Trade data, while a Membership Map model (not applicable in this design) would be used for collaborative entities (not present in the provided entities). Segregation ensures homogeneous security postures for each collection.\n\nTrades are stored under the respective user's path (`/users/{userId}/trades/{tradeId}`), enabling simple and secure ownership-based rules and efficient listing of trades for a specific user. User following relationships are modeled in the `/follows/{followId}` collection, including `followerId` and `followingId` fields, enabling efficient following/follower queries without requiring complex aggregation. Sentiment analysis is stored in the `/sentiment_analyses/{sentimentAnalysisId}` collection. No denormalization is needed here since sentiment analysis is available to subscribers.\n\nThis structure ensures Authorization Independence. For example, rules for `/users/{userId}/trades/{tradeId}` depend solely on `request.auth.uid` matching the `userId` path parameter. Similarly, rules for `/follows/{followId}` can check if `request.auth.uid` matches either `followerId` or `followingId`, depending on the desired operation. This avoids `get()` calls in rules and facilitates atomic operations.\n\nQAPs (Rules are not Filters) are supported through structural segregation. List operations are inherently secure because each collection has a clearly defined security posture. For example, listing trades under `/users/{userId}/trades` is secured by verifying `request.auth.uid == userId`. Listing follows in `/follows` can be secured to only show public data or data associated with the requesting user."
+    ]
   }
 }

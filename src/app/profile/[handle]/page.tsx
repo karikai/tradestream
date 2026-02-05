@@ -79,7 +79,7 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
                     <Link href={`/checkout/${group.id}`}>
                       <Button className="rounded-full font-bold bg-primary hover:bg-primary/90 gap-2">
                         <Lock className="h-4 w-4" />
-                        Join {group.name}
+                        Join Group
                       </Button>
                     </Link>
                   )}

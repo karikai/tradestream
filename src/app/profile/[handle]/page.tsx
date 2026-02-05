@@ -4,11 +4,11 @@ import { use } from "react";
 import { SidebarNavigation } from "@/components/SidebarNavigation";
 import { RightSidebar } from "@/components/RightSidebar";
 import { MobileNav } from "@/components/MobileNav";
-import { MOCK_USERS, MOCK_TRADES } from "@/lib/mock-data";
+import { MOCK_USERS, MOCK_TRADES, MOCK_GROUPS } from "@/lib/mock-data";
 import { TradeCard } from "@/components/TradeCard";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CalendarDays, Link as LinkIcon, MapPin, ArrowLeft, Verified } from "lucide-react";
+import { CalendarDays, Link as LinkIcon, MapPin, ArrowLeft, Verified, Lock } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -18,6 +18,8 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
   
   const user = MOCK_USERS.find(u => u.handle.toLowerCase() === handle.toLowerCase());
   const userTrades = MOCK_TRADES.filter(t => t.user.handle.toLowerCase() === handle.toLowerCase());
+  const group = MOCK_GROUPS.find(g => g.creator.handle.toLowerCase() === handle.toLowerCase());
+  const isMe = handle.toLowerCase() === 'johndoe_trading';
 
   if (!user) {
     return (
@@ -67,12 +69,26 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
             </div>
-            <div className="flex justify-end p-4">
-              <Button variant="outline" className="rounded-full font-bold">Edit profile</Button>
+            <div className="flex justify-end p-4 gap-2">
+              {isMe ? (
+                <Button variant="outline" className="rounded-full font-bold">Edit profile</Button>
+              ) : (
+                <>
+                  <Button variant="outline" className="rounded-full font-bold">Follow</Button>
+                  {group && (
+                    <Link href={`/checkout/${group.id}`}>
+                      <Button className="rounded-full font-bold bg-primary hover:bg-primary/90 gap-2">
+                        <Lock className="h-4 w-4" />
+                        Join {group.name}
+                      </Button>
+                    </Link>
+                  )}
+                </>
+              )}
             </div>
           </div>
 
-          {/* User Info - Increased mt to clear the avatar overlap */}
+          {/* User Info */}
           <div className="mt-16 px-4 space-y-4 pb-4 border-b border-border">
             <div>
               <h2 className="text-xl font-black font-headline tracking-tighter flex items-center gap-1">

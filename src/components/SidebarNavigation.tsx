@@ -10,11 +10,11 @@ import { Button } from "@/components/ui/button";
 const NAV_ITEMS = [
   { icon: Home, label: "Home", href: "/" },
   { icon: Search, label: "Search", href: "/search" },
-  { icon: TrendingUp, label: "Trends", href: "/trends" },
+  // { icon: TrendingUp, label: "Trends", href: "/trends" },
   { icon: Users, label: "Groups", href: "/groups" },
-  { icon: Bell, label: "Notifications", href: "/notifications" },
-  { icon: Mail, label: "Messages", href: "/messages" },
-  { icon: Bookmark, label: "Bookmarks", href: "/bookmarks" },
+  // { icon: Bell, label: "Notifications", href: "/notifications" },
+  // { icon: Mail, label: "Messages", href: "/messages" },
+  // { icon: Bookmark, label: "Bookmarks", href: "/bookmarks" },
   { icon: User, label: "Profile", href: "/profile/johndoe_trading" },
   { icon: Settings, label: "Settings", href: "#" },
 ];

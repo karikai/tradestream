@@ -47,42 +47,44 @@ export default function GroupsPage() {
               {myGroups.length > 0 ? (
                 <div className="grid gap-4">
                   {myGroups.map((group) => (
-                    <Card key={group.id} className="overflow-hidden border-primary/10 hover:border-primary/30 transition-colors group cursor-pointer">
-                      <CardContent className="p-0">
-                        <div className="p-4 flex gap-4">
-                          <Avatar className="h-16 w-16 rounded-2xl">
-                            <AvatarImage src={group.avatar} />
-                            <AvatarFallback>{group.name.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between">
-                              <div className="min-w-0">
-                                <h3 className="font-bold truncate flex items-center gap-1">
-                                  {group.name}
-                                </h3>
-                                <p className="text-xs text-muted-foreground flex items-center gap-1 mb-1">
-                                  by <span className="font-bold text-primary">@{group.creator.handle}</span>
-                                  {group.creator.verified && <Verified className="h-3 w-3 text-primary fill-primary text-primary-foreground" />}
-                                </p>
+                    <Link key={group.id} href={`/groups/${group.id}`}>
+                      <Card className="overflow-hidden border-primary/10 hover:border-primary/30 transition-colors group cursor-pointer">
+                        <CardContent className="p-0">
+                          <div className="p-4 flex gap-4">
+                            <Avatar className="h-16 w-16 rounded-2xl">
+                              <AvatarImage src={group.avatar} />
+                              <AvatarFallback>{group.name.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between">
+                                <div className="min-w-0">
+                                  <h3 className="font-bold truncate flex items-center gap-1">
+                                    {group.name}
+                                  </h3>
+                                  <p className="text-xs text-muted-foreground flex items-center gap-1 mb-1">
+                                    by <span className="font-bold text-primary">@{group.creator.handle}</span>
+                                    {group.creator.verified && <Verified className="h-3.5 w-3.5 text-primary fill-primary text-primary-foreground" />}
+                                  </p>
+                                </div>
+                                <Badge className="bg-primary/10 text-primary border-none text-[10px] font-bold">SUBSCRIBED</Badge>
                               </div>
-                              <Badge className="bg-primary/10 text-primary border-none text-[10px] font-bold">SUBSCRIBED</Badge>
-                            </div>
-                            <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
-                              {group.description}
-                            </p>
-                            <div className="flex items-center gap-4 mt-3">
-                              <span className="text-xs font-bold text-muted-foreground flex items-center gap-1">
-                                <Users className="h-3 w-3" />
-                                {group.memberCount.toLocaleString()} members
-                              </span>
-                              <Button variant="link" className="p-0 h-auto text-xs font-bold text-primary group-hover:translate-x-1 transition-transform">
-                                View Group <ChevronRight className="h-3 w-3" />
-                              </Button>
+                              <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+                                {group.description}
+                              </p>
+                              <div className="flex items-center gap-4 mt-3">
+                                <span className="text-xs font-bold text-muted-foreground flex items-center gap-1">
+                                  <Users className="h-3 w-3" />
+                                  {group.memberCount.toLocaleString()} members
+                                </span>
+                                <Button variant="link" className="p-0 h-auto text-xs font-bold text-primary group-hover:translate-x-1 transition-transform">
+                                  View Group <ChevronRight className="h-3 w-3" />
+                                </Button>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   ))}
                 </div>
               ) : (

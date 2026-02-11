@@ -7,7 +7,6 @@ import { TradeCard } from "./TradeCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SlidersHorizontal, ArrowDownWideNarrow, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export function Feed() {
   const [activeTab, setActiveTab] = useState("all");
@@ -24,9 +23,7 @@ export function Feed() {
       <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border">
         {/* Mobile Header */}
         <div className="sm:hidden px-4 py-3 flex items-center justify-between">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-accent text-accent-foreground text-xs font-bold">JD</AvatarFallback>
-          </Avatar>
+          <div className="w-8" />
           <Zap className="h-6 w-6 text-primary fill-primary" />
           <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
             <SlidersHorizontal className="h-4 w-4" />

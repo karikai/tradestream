@@ -24,8 +24,8 @@ export function SentimentTool() {
       const tradesForTicker = MOCK_TRADES
         .filter(t => t.ticker.toUpperCase() === ticker.toUpperCase())
         .map(t => ({
-          size: t.size,
-          price: t.price,
+          contracts: t.contractsPurchased,
+          avgCost: t.averageCost,
           optionType: t.optionType
         }));
 
@@ -33,8 +33,8 @@ export function SentimentTool() {
       const result = await analyzeTradeSentiment({
         ticker: ticker.toUpperCase(),
         trades: tradesForTicker.length > 0 ? tradesForTicker : [
-            { size: 100, price: 5.50, optionType: 'call' },
-            { size: 200, price: 4.20, optionType: 'put' }
+            { contracts: 100, avgCost: 5.50, optionType: 'call' },
+            { contracts: 200, avgCost: 4.20, optionType: 'put' }
         ]
       });
       setAnalysis(result);

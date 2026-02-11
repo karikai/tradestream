@@ -37,11 +37,14 @@ export interface Trade {
   optionType: OptionType;
   strikePrice: number;
   expirationDate: string;
-  size: number;
-  price: number;
+  contractsPurchased: number;
+  averageCost: number;
+  contractsSold?: number;
+  priceAtClose?: number;
+  profitAmount?: number;
+  profitPercentage?: number;
   timestamp: string;
   sentiment?: 'bullish' | 'bearish' | 'neutral';
-  returnPercentage?: number;
   groupId?: string; // Optional: linked to a group
 }
 

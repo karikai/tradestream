@@ -42,49 +42,52 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Trade",
       "type": "object",
-      "description": "Represents a single stock options trade.",
+      "description": "Represents a single stock options trade with detailed performance metrics.",
       "properties": {
         "id": {
-          "type": "string",
-          "description": "Unique identifier for the Trade entity."
+          "type": "string"
         },
         "userId": {
-          "type": "string",
-          "description": "Reference to User. The user who made the trade."
+          "type": "string"
         },
         "ticker": {
-          "type": "string",
-          "description": "The stock ticker symbol."
+          "type": "string"
         },
         "optionType": {
           "type": "string",
-          "description": "The type of option (call, put)."
+          "enum": ["call", "put"]
+        },
+        "strikePrice": {
+          "type": "number"
         },
         "expirationDate": {
           "type": "string",
-          "description": "The expiration date of the option.",
           "format": "date-time"
         },
-        "strikePrice": {
-          "type": "number",
-          "description": "The strike price of the option."
+        "contractsPurchased": {
+          "type": "number"
         },
-        "tradeSize": {
-          "type": "number",
-          "description": "The size of the trade."
+        "averageCost": {
+          "type": "number"
         },
-        "tradePrice": {
-          "type": "number",
-          "description": "The price at which the trade was executed."
+        "contractsSold": {
+          "type": "number"
+        },
+        "priceAtClose": {
+          "type": "number"
+        },
+        "profitAmount": {
+          "type": "number"
+        },
+        "profitPercentage": {
+          "type": "number"
         },
         "timestamp": {
           "type": "string",
-          "description": "The timestamp when the trade was executed.",
           "format": "date-time"
         },
         "groupId": {
-          "type": "string",
-          "description": "Optional reference to a Group if the trade is exclusive to a group."
+          "type": "string"
         }
       },
       "required": [
@@ -92,10 +95,10 @@
         "userId",
         "ticker",
         "optionType",
-        "expirationDate",
         "strikePrice",
-        "tradeSize",
-        "tradePrice",
+        "expirationDate",
+        "contractsPurchased",
+        "averageCost",
         "timestamp"
       ]
     },
@@ -115,8 +118,7 @@
           "type": "string"
         },
         "creatorId": {
-          "type": "string",
-          "description": "The user ID of the creator."
+          "type": "string"
         },
         "monthlyPrice": {
           "type": "number"
@@ -161,58 +163,27 @@
         "userId",
         "expiresAt"
       ]
-    },
-    "Follow": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Follow",
-      "type": "object",
-      "description": "Represents the following relationship between users.",
-      "properties": {
-        "id": { "type": "string" },
-        "followerId": { "type": "string" },
-        "followingId": { "type": "string" },
-        "createdAt": { "type": "string", "format": "date-time" }
-      },
-      "required": ["id", "followerId", "followingId", "createdAt"]
     }
   },
   "auth": {
     "providers": ["password", "anonymous"]
   },
   "firestore": {
-    "structure": [
-      {
-        "path": "/users/{userId}",
-        "definition": {
-          "entityName": "User",
-          "schema": { "$ref": "#/backend/entities/User" },
-          "description": "User profiles."
-        }
-      },
-      {
-        "path": "/users/{userId}/trades/{tradeId}",
-        "definition": {
-          "entityName": "Trade",
-          "schema": { "$ref": "#/backend/entities/Trade" },
-          "description": "Personal trades for a user."
-        }
-      },
-      {
-        "path": "/groups/{groupId}",
-        "definition": {
-          "entityName": "Group",
-          "schema": { "$ref": "#/backend/entities/Group" },
-          "description": "Exclusive trading groups."
-        }
-      },
-      {
-        "path": "/groups/{groupId}/memberships/{userId}",
-        "definition": {
-          "entityName": "Membership",
-          "schema": { "$ref": "#/backend/entities/Membership" },
-          "description": "Active group subscriptions."
-        }
-      }
-    ]
+    "/users/{userId}": {
+      "schema": { "$ref": "#/backend/entities/User" },
+      "description": "User profiles."
+    },
+    "/users/{userId}/trades/{tradeId}": {
+      "schema": { "$ref": "#/backend/entities/Trade" },
+      "description": "Personal trades for a user."
+    },
+    "/groups/{groupId}": {
+      "schema": { "$ref": "#/backend/entities/Group" },
+      "description": "Exclusive trading groups."
+    },
+    "/groups/{groupId}/memberships/{userId}": {
+      "schema": { "$ref": "#/backend/entities/Membership" },
+      "description": "Active group subscriptions."
+    }
   }
 }

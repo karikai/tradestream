@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -15,8 +16,8 @@ const AnalyzeTradeSentimentInputSchema = z.object({
   ticker: z.string().describe('The stock ticker symbol to analyze.'),
   trades: z
     .array(z.object({
-      size: z.number().describe('The size of the trade.'),
-      price: z.number().describe('The price of the trade.'),
+      contracts: z.number().describe('The number of contracts purchased.'),
+      avgCost: z.number().describe('The average cost per contract.'),
       optionType: z.enum(['call', 'put']).describe('The option type (call or put).'),
     }))
     .describe('An array of recent trades for the given ticker.'),
@@ -50,7 +51,7 @@ const analyzeTradeSentimentPrompt = ai.definePrompt({
 
   Trades:
   {{#each trades}}
-  - Size: {{size}}, Price: {{price}}, Option Type: {{optionType}}
+  - Contracts: {{contracts}}, Avg Cost: {{avgCost}}, Option Type: {{optionType}}
   {{/each}}
 
   Consider factors such as the relative volume of calls vs. puts, the price trends, and any significant outliers.

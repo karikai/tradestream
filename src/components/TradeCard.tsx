@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
-import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified, Flame, Bookmark } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified, Flame, Bookmark, DollarSign } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -16,6 +16,7 @@ interface TradeCardProps {
 
 export function TradeCard({ trade }: TradeCardProps) {
   const isCall = trade.optionType === "call";
+  const isProfitable = (trade.profitAmount ?? 0) > 0;
   
   return (
     <Card className="rounded-none border-x-0 border-t-0 shadow-none hover:bg-muted/30 transition-colors cursor-pointer p-4 group">
@@ -56,30 +57,51 @@ export function TradeCard({ trade }: TradeCardProps) {
               <span className="text-sm font-medium">
                 ${trade.strikePrice} Exp {new Date(trade.expirationDate).toLocaleDateString()}
               </span>
-              {trade.returnPercentage && trade.returnPercentage > 0 && (
+              {trade.profitPercentage && trade.profitPercentage > 0 && (
                 <Badge variant="outline" className="ml-auto border-accent/20 bg-accent/5 text-accent font-black gap-1 text-[10px]">
                   <Flame className="h-3 w-3 fill-accent" />
-                  +{trade.returnPercentage}%
+                  +{trade.profitPercentage}%
                 </Badge>
               )}
             </div>
             
-            <div className="grid grid-cols-2 gap-4 bg-muted/20 p-3 rounded-lg border border-border/50">
-              <div>
-                <p className="text-[10px] uppercase text-muted-foreground font-bold tracking-tighter">Size</p>
-                <p className="text-base font-bold tabular-nums">{trade.size.toLocaleString()} Contracts</p>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase text-muted-foreground font-bold tracking-tighter">Price</p>
-                <div className="flex items-center gap-1">
-                  <p className="text-base font-bold tabular-nums">${trade.price.toFixed(2)}</p>
-                  {isCall ? (
-                    <ArrowUpRight className="h-4 w-4 text-accent" />
-                  ) : (
-                    <ArrowDownRight className="h-4 w-4 text-destructive" />
-                  )}
+            <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-3 bg-muted/20 p-3 rounded-t-lg border border-border/50 border-b-0">
+                <div>
+                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider">Avg Cost</p>
+                  <p className="text-sm font-bold tabular-nums">${trade.averageCost.toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider">Contracts</p>
+                  <p className="text-sm font-bold tabular-nums">{trade.contractsPurchased.toLocaleString()}</p>
                 </div>
               </div>
+
+              {(trade.contractsSold !== undefined || trade.profitAmount !== undefined) && (
+                <div className="grid grid-cols-2 gap-3 bg-primary/5 p-3 rounded-b-lg border border-primary/10">
+                  {trade.contractsSold !== undefined && (
+                    <div>
+                      <p className="text-[9px] uppercase text-primary/70 font-black tracking-wider">Sold @ ${trade.priceAtClose?.toFixed(2)}</p>
+                      <p className="text-sm font-bold tabular-nums">{trade.contractsSold} Closed</p>
+                    </div>
+                  )}
+                  {trade.profitAmount !== undefined && (
+                    <div>
+                      <p className="text-[9px] uppercase text-primary/70 font-black tracking-wider">Total Profit</p>
+                      <div className="flex items-center gap-1">
+                        <p className={cn("text-sm font-black tabular-nums", isProfitable ? "text-accent" : "text-destructive")}>
+                          {isProfitable ? '+' : ''}${trade.profitAmount.toLocaleString()}
+                        </p>
+                        {isProfitable ? (
+                          <ArrowUpRight className="h-3.5 w-3.5 text-accent" />
+                        ) : (
+                          <ArrowDownRight className="h-3.5 w-3.5 text-destructive" />
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             
             <div className="flex items-center justify-between pt-4 max-w-sm">

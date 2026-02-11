@@ -1,4 +1,3 @@
-
 {
   "entities": {
     "User": {
@@ -9,7 +8,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier for the User entity."
+          "description": "Unique identifier for the user entity."
         },
         "username": {
           "type": "string",
@@ -24,70 +23,60 @@
           "type": "string",
           "description": "The user's full name."
         },
-        "createdAt": {
+        "bio": {
           "type": "string",
-          "description": "The timestamp when the user account was created.",
-          "format": "date-time"
+          "description": "A short biography of the user."
         }
       },
       "required": [
         "id",
         "username",
-        "email",
-        "fullName",
-        "createdAt"
+        "email"
       ]
     },
     "Trade": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Trade",
       "type": "object",
-      "description": "Represents a single stock options trade with detailed performance metrics.",
+      "description": "Represents a single stock option trade.",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "Unique identifier for the trade entity."
         },
         "userId": {
-          "type": "string"
+          "type": "string",
+          "description": "Reference to User who made the trade. (Relationship: User 1:N Trade)"
         },
         "ticker": {
-          "type": "string"
+          "type": "string",
+          "description": "The stock ticker symbol (e.g., AAPL)."
         },
         "optionType": {
           "type": "string",
-          "enum": ["call", "put"]
-        },
-        "strikePrice": {
-          "type": "number"
+          "description": "The type of option (call or put)."
         },
         "expirationDate": {
           "type": "string",
+          "description": "The expiration date of the option.",
           "format": "date-time"
         },
-        "contractsPurchased": {
-          "type": "number"
+        "strikePrice": {
+          "type": "number",
+          "description": "The strike price of the option."
         },
-        "averageCost": {
-          "type": "number"
+        "tradeSize": {
+          "type": "number",
+          "description": "The size of the trade (number of contracts)."
         },
-        "contractsSold": {
-          "type": "number"
-        },
-        "priceAtClose": {
-          "type": "number"
-        },
-        "profitAmount": {
-          "type": "number"
-        },
-        "profitPercentage": {
-          "type": "number"
+        "tradePrice": {
+          "type": "number",
+          "description": "The price at which the trade was executed."
         },
         "timestamp": {
           "type": "string",
+          "description": "The timestamp of when the trade occurred.",
           "format": "date-time"
-        },
-        "groupId": {
-          "type": "string"
         }
       },
       "required": [
@@ -95,95 +84,166 @@
         "userId",
         "ticker",
         "optionType",
-        "strikePrice",
         "expirationDate",
-        "contractsPurchased",
-        "averageCost",
+        "strikePrice",
+        "tradeSize",
+        "tradePrice",
         "timestamp"
       ]
     },
-    "Group": {
+    "Follow": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Group",
+      "title": "Follow",
       "type": "object",
-      "description": "Represents a subscription-based group created by a trader.",
+      "description": "Represents the following relationship between users.",
       "properties": {
         "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "creatorId": {
-          "type": "string"
-        },
-        "monthlyPrice": {
-          "type": "number"
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "memberCount": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "creatorId",
-        "monthlyPrice"
-      ]
-    },
-    "Membership": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Membership",
-      "type": "object",
-      "description": "Represents a user's active subscription to a group.",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "groupId": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "string"
-        },
-        "expiresAt": {
           "type": "string",
+          "description": "Unique identifier for the follow entity."
+        },
+        "followerId": {
+          "type": "string",
+          "description": "Reference to User who is following. (Relationship: User 1:N Follow)"
+        },
+        "followingId": {
+          "type": "string",
+          "description": "Reference to User who is being followed. (Relationship: User 1:N Follow)"
+        },
+        "followDate": {
+          "type": "string",
+          "description": "The date and time when the follow relationship was created.",
           "format": "date-time"
         }
       },
       "required": [
         "id",
-        "groupId",
-        "userId",
-        "expiresAt"
+        "followerId",
+        "followingId",
+        "followDate"
+      ]
+    },
+    "Sentiment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Sentiment",
+      "type": "object",
+      "description": "Represents the sentiment analysis of a particular stock or option.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the sentiment entity."
+        },
+        "tradeId": {
+          "type": "string",
+          "description": "Reference to Trade that the sentiment is related to. (Relationship: Trade 1:1 Sentiment)"
+        },
+        "ticker": {
+          "type": "string",
+          "description": "The stock ticker symbol (e.g., AAPL) for the sentiment."
+        },
+        "sentimentScore": {
+          "type": "number",
+          "description": "The sentiment score (e.g., -1 to 1, where -1 is bearish, 0 is neutral, and 1 is bullish)."
+        },
+        "analysisTimestamp": {
+          "type": "string",
+          "description": "The timestamp of when the sentiment analysis was performed.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "tradeId",
+        "ticker",
+        "sentimentScore",
+        "analysisTimestamp"
       ]
     }
   },
   "auth": {
-    "providers": ["password", "anonymous"]
+    "providers": [
+      "password",
+      "anonymous"
+    ]
   },
   "firestore": {
-    "/users/{userId}": {
-      "schema": { "$ref": "#/backend/entities/User" },
-      "description": "User profiles."
-    },
-    "/users/{userId}/trades/{tradeId}": {
-      "schema": { "$ref": "#/backend/entities/Trade" },
-      "description": "Personal trades for a user."
-    },
-    "/groups/{groupId}": {
-      "schema": { "$ref": "#/backend/entities/Group" },
-      "description": "Exclusive trading groups."
-    },
-    "/groups/{groupId}/memberships/{userId}": {
-      "schema": { "$ref": "#/backend/entities/Membership" },
-      "description": "Active group subscriptions."
-    }
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles.  Authorization is based on path-based ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/trades/{tradeId}",
+        "definition": {
+          "entityName": "Trade",
+          "schema": {
+            "$ref": "#/backend/entities/Trade"
+          },
+          "description": "Stores trades made by a user. Authorization is based on path-based ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "tradeId",
+              "description": "The unique identifier for the trade."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/follows/{followId}",
+        "definition": {
+          "entityName": "Follow",
+          "schema": {
+            "$ref": "#/backend/entities/Follow"
+          },
+          "description": "Stores follow relationships for a user. Authorization is based on path-based ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user who is following (followerId)."
+            },
+            {
+              "name": "followId",
+              "description": "The unique identifier for the follow relationship."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/trades/{tradeId}/sentiment",
+        "definition": {
+          "entityName": "Sentiment",
+          "schema": {
+            "$ref": "#/backend/entities/Sentiment"
+          },
+          "description": "Stores sentiment analysis for a trade. Authorization is inherited from the parent trade document (path-based ownership).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user who made the trade."
+            },
+            {
+              "name": "tradeId",
+              "description": "The unique identifier for the trade."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support TradeStream's core features, including a live trade feed, user following, filtering/search, trade details, and sentiment analysis. The design prioritizes authorization independence, clarity of intent, and QAPs (Rules are not Filters). Specifically, it leverages structural segregation (homogeneous security posture) and access modeling. For user-owned data (trades, follows), hierarchical paths under `/users/{userId}` are utilized.  Collaborative data patterns (Membership Map) are not relevant in this design. Sentiment data is stored in a subcollection of trades for easy access and filtering.  Authorization Independence is achieved by storing all data related to a specific user under their userId.  The primary means of securing the list operations is path-based ownership under the `/users/{userId}` path."
   }
 }

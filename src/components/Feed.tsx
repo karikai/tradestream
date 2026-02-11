@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -36,9 +35,6 @@ export function Feed() {
         {/* Desktop Title */}
         <div className="hidden sm:flex px-4 py-4 items-center justify-between">
           <h1 className="text-xl font-black font-headline tracking-tighter">Home</h1>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <SlidersHorizontal className="h-5 w-5" />
-          </Button>
         </div>
         
         <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>

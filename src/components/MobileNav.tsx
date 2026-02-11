@@ -3,14 +3,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Bell, Mail, Plus } from "lucide-react";
+import { Home, Search, Mail, Plus, Users, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { icon: Home, label: "Home", href: "/" },
-  { icon: Search, label: "Search", href: "/search" },
-  { icon: Bell, label: "Activity", href: "/notifications" },
+  { icon: Users, label: "Groups", href: "/groups" },
   { icon: Mail, label: "Messages", href: "/messages" },
+  { icon: Search, label: "Search", href: "/search" },
+  { icon: User, label: "Profile", href: "/profile/johndoe_trading" },
 ];
 
 export function MobileNav() {
@@ -30,11 +31,11 @@ export function MobileNav() {
             key={item.label}
             href={item.href}
             className={cn(
-              "flex flex-col items-center justify-center gap-1 min-w-[64px] transition-colors",
+              "flex flex-col items-center justify-center gap-1 min-w-[60px] transition-colors",
               pathname === item.href ? "text-primary" : "text-muted-foreground"
             )}
           >
-            <item.icon className={cn("h-6 w-6", pathname === item.href && "fill-primary/10")} />
+            <item.icon className={cn("h-5 w-5", pathname === item.href && "fill-primary/10")} />
             <span className="text-[10px] font-bold uppercase tracking-tighter">{item.label}</span>
           </Link>
         ))}

@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   // { icon: Mail, label: "Messages", href: "/messages" },
   // { icon: Bookmark, label: "Bookmarks", href: "/bookmarks" },
   { icon: User, label: "Profile", href: "/profile/johndoe_trading" },
-  { icon: Settings, label: "Settings", href: "#" },
+  { icon: Settings, label: "Settings", href: "/settings" },
 ];
 
 export function SidebarNavigation() {

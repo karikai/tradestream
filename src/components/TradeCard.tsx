@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Trade } from "@/lib/types";
@@ -18,6 +17,9 @@ export function TradeCard({ trade }: TradeCardProps) {
   const isCall = trade.optionType === "call";
   const isProfitable = (trade.profitAmount ?? 0) > 0;
   
+  const totalCostOpen = trade.averageCost * trade.contractsPurchased;
+  const totalValueClose = (trade.priceAtClose ?? 0) * (trade.contractsSold ?? 0);
+
   return (
     <Card className="rounded-none border-x-0 border-t-0 shadow-none hover:bg-muted/30 transition-colors cursor-pointer p-4 group">
       <div className="flex gap-3">
@@ -46,7 +48,7 @@ export function TradeCard({ trade }: TradeCardProps) {
           </div>
           
           <div className="pt-1">
-            <div className="flex flex-wrap items-center gap-2 mb-2">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
               <span className="text-lg font-black font-headline text-primary">${trade.ticker}</span>
               <Badge variant={isCall ? "default" : "destructive"} className={cn(
                 "font-bold uppercase tracking-wider text-[10px]",
@@ -57,51 +59,66 @@ export function TradeCard({ trade }: TradeCardProps) {
               <span className="text-sm font-medium">
                 ${trade.strikePrice} Exp {new Date(trade.expirationDate).toLocaleDateString()}
               </span>
-              {trade.profitPercentage && trade.profitPercentage > 0 && (
-                <Badge variant="outline" className="ml-auto border-accent/20 bg-accent/5 text-accent font-black gap-1 text-[10px]">
-                  <Flame className="h-3 w-3 fill-accent" />
-                  +{trade.profitPercentage}%
-                </Badge>
-              )}
             </div>
             
-            <div className="space-y-0">
-              <div className="grid grid-cols-2 gap-3 bg-muted/20 p-3 rounded-t-lg border border-border/50">
-                <div>
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider">Avg Cost</p>
+            <div className="border border-border rounded-lg overflow-hidden bg-muted/10">
+              {/* Row 1: Opening Position */}
+              <div className="grid grid-cols-3 divide-x divide-border border-b border-border">
+                <div className="p-2.5">
+                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider mb-1 leading-none">Avg Cost (Open)</p>
                   <p className="text-sm font-bold tabular-nums">${trade.averageCost.toFixed(2)}</p>
                 </div>
-                <div>
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider">Contracts</p>
+                <div className="p-2.5">
+                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider mb-1 leading-none">Contracts</p>
                   <p className="text-sm font-bold tabular-nums">{trade.contractsPurchased.toLocaleString()}</p>
+                </div>
+                <div className="p-2.5 bg-primary/5">
+                  <p className="text-[9px] uppercase text-primary/70 font-black tracking-wider mb-1 leading-none">Total Cost</p>
+                  <p className="text-sm font-bold tabular-nums text-primary">${totalCostOpen.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 </div>
               </div>
 
-              {(trade.contractsSold !== undefined || trade.profitAmount !== undefined) && (
-                <div className="grid grid-cols-2 gap-3 bg-primary/5 p-3 rounded-b-lg border border-primary/10 border-t-0">
-                  {trade.contractsSold !== undefined && (
-                    <div>
-                      <p className="text-[9px] uppercase text-primary/70 font-black tracking-wider">Sold @ ${trade.priceAtClose?.toFixed(2)}</p>
-                      <p className="text-sm font-bold tabular-nums">{trade.contractsSold} Closed</p>
-                    </div>
-                  )}
-                  {trade.profitAmount !== undefined && (
-                    <div>
-                      <p className="text-[9px] uppercase text-primary/70 font-black tracking-wider">Total Profit</p>
-                      <div className="flex items-center gap-1">
-                        <p className={cn("text-sm font-black tabular-nums", isProfitable ? "text-accent" : "text-destructive")}>
-                          {isProfitable ? '+' : ''}${trade.profitAmount.toLocaleString()}
-                        </p>
-                        {isProfitable ? (
-                          <ArrowUpRight className="h-3.5 w-3.5 text-accent" />
-                        ) : (
-                          <ArrowDownRight className="h-3.5 w-3.5 text-destructive" />
-                        )}
-                      </div>
-                    </div>
-                  )}
+              {/* Row 2: Closing Position */}
+              <div className="grid grid-cols-3 divide-x divide-border border-b border-border bg-gray-50/50">
+                <div className="p-2.5">
+                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider mb-1 leading-none">Avg Price (Close)</p>
+                  <p className="text-sm font-bold tabular-nums">${trade.priceAtClose?.toFixed(2) ?? "—"}</p>
                 </div>
-              )}
+                <div className="p-2.5">
+                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider mb-1 leading-none">Sold</p>
+                  <p className="text-sm font-bold tabular-nums">{trade.contractsSold?.toLocaleString() ?? "—"}</p>
+                </div>
+                <div className="p-2.5 bg-primary/5">
+                  <p className="text-[9px] uppercase text-primary/70 font-black tracking-wider mb-1 leading-none">Total Value</p>
+                  <p className="text-sm font-bold tabular-nums text-primary">
+                    {trade.priceAtClose ? `$${totalValueClose.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "—"}
+                  </p>
+                </div>
+              </div>
+
+              {/* Row 3: Profitability Metrics */}
+              <div className="grid grid-cols-3 divide-x divide-border">
+                <div className="p-2.5 bg-background">
+                  {/* Empty cell as requested */}
+                </div>
+                <div className="p-2.5 bg-background">
+                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider mb-1 leading-none">Profit %</p>
+                  <div className="flex items-center gap-1">
+                    <p className={cn("text-sm font-black tabular-nums", isProfitable ? "text-accent" : "text-destructive")}>
+                      {trade.profitPercentage ? `${isProfitable ? '+' : ''}${trade.profitPercentage}%` : "—"}
+                    </p>
+                  </div>
+                </div>
+                <div className="p-2.5 bg-background">
+                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider mb-1 leading-none">Profit $</p>
+                  <div className="flex items-center gap-1">
+                    <p className={cn("text-sm font-black tabular-nums", isProfitable ? "text-accent" : "text-destructive")}>
+                      {trade.profitAmount ? `${isProfitable ? '+' : ''}$${trade.profitAmount.toLocaleString()}` : "—"}
+                    </p>
+                    {trade.profitAmount !== undefined && (isProfitable ? <ArrowUpRight className="h-3.5 w-3.5 text-accent" /> : <ArrowDownRight className="h-3.5 w-3.5 text-destructive" />)}
+                  </div>
+                </div>
+              </div>
             </div>
             
             <div className="flex items-center justify-between pt-3 max-w-sm">

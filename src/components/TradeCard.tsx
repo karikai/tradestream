@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
-import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified, Flame, Bookmark, DollarSign } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified, Flame, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -46,7 +46,7 @@ export function TradeCard({ trade }: TradeCardProps) {
           </div>
           
           <div className="pt-1">
-            <div className="flex flex-wrap items-center gap-2 mb-3">
+            <div className="flex flex-wrap items-center gap-2 mb-2">
               <span className="text-lg font-black font-headline text-primary">${trade.ticker}</span>
               <Badge variant={isCall ? "default" : "destructive"} className={cn(
                 "font-bold uppercase tracking-wider text-[10px]",
@@ -65,8 +65,8 @@ export function TradeCard({ trade }: TradeCardProps) {
               )}
             </div>
             
-            <div className="space-y-2">
-              <div className="grid grid-cols-2 gap-3 bg-muted/20 p-3 rounded-t-lg border border-border/50 border-b-0">
+            <div className="space-y-0">
+              <div className="grid grid-cols-2 gap-3 bg-muted/20 p-3 rounded-t-lg border border-border/50">
                 <div>
                   <p className="text-[9px] uppercase text-muted-foreground font-black tracking-wider">Avg Cost</p>
                   <p className="text-sm font-bold tabular-nums">${trade.averageCost.toFixed(2)}</p>
@@ -78,7 +78,7 @@ export function TradeCard({ trade }: TradeCardProps) {
               </div>
 
               {(trade.contractsSold !== undefined || trade.profitAmount !== undefined) && (
-                <div className="grid grid-cols-2 gap-3 bg-primary/5 p-3 rounded-b-lg border border-primary/10">
+                <div className="grid grid-cols-2 gap-3 bg-primary/5 p-3 rounded-b-lg border border-primary/10 border-t-0">
                   {trade.contractsSold !== undefined && (
                     <div>
                       <p className="text-[9px] uppercase text-primary/70 font-black tracking-wider">Sold @ ${trade.priceAtClose?.toFixed(2)}</p>
@@ -104,7 +104,7 @@ export function TradeCard({ trade }: TradeCardProps) {
               )}
             </div>
             
-            <div className="flex items-center justify-between pt-4 max-w-sm">
+            <div className="flex items-center justify-between pt-3 max-w-sm">
               <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group">
                 <div className="p-2 rounded-full group-hover:bg-primary/10">
                   <MessageSquare className="h-4 w-4" />

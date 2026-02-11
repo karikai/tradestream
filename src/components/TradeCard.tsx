@@ -21,7 +21,7 @@ export function TradeCard({ trade }: TradeCardProps) {
   const totalValueClose = (trade.priceAtClose ?? 0) * (trade.contractsSold ?? 0);
 
   return (
-    <Card className="rounded-none border-x-0 border-t-0 shadow-none hover:bg-muted/30 transition-colors cursor-pointer p-4 group">
+    <Card className="rounded-none border-x-0 border-t-0 shadow-none hover:bg-muted/10 transition-colors cursor-pointer p-4 group">
       <div className="flex gap-3">
         <Link href={`/profile/${trade.user.handle}`} className="shrink-0" onClick={(e) => e.stopPropagation()}>
           <Avatar className="h-10 w-10">
@@ -49,68 +49,68 @@ export function TradeCard({ trade }: TradeCardProps) {
           
           <div className="pt-1">
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="text-lg font-black font-headline text-primary">${trade.ticker}</span>
+              <span className="text-lg font-black font-headline text-primary tracking-tighter">${trade.ticker}</span>
               <Badge variant={isCall ? "default" : "destructive"} className={cn(
-                "font-bold uppercase tracking-wider text-[10px]",
+                "font-black uppercase tracking-widest text-[9px] rounded-none px-1.5 h-4",
                 isCall && "bg-accent text-accent-foreground hover:bg-accent/90"
               )}>
                 {trade.optionType}
               </Badge>
-              <span className="text-sm font-medium">
-                ${trade.strikePrice} Exp {new Date(trade.expirationDate).toLocaleDateString()}
+              <span className="text-xs font-bold tabular-nums">
+                ${trade.strikePrice} <span className="text-muted-foreground font-medium">EXP</span> {new Date(trade.expirationDate).toLocaleDateString()}
               </span>
             </div>
             
-            <div className="border border-border rounded-lg overflow-hidden bg-white shadow-sm">
+            <div className="border border-border bg-white shadow-sm overflow-hidden rounded-none">
               {/* Row 1: Opening Position */}
               <div className="grid grid-cols-3 border-b border-border">
-                <div className="p-3">
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-widest mb-1 leading-none">Avg Cost (In)</p>
-                  <p className="text-sm font-bold tabular-nums text-foreground/90">${trade.averageCost.toFixed(2)}</p>
+                <div className="p-2 sm:p-3">
+                  <p className="text-[8px] uppercase text-muted-foreground font-black tracking-[0.15em] mb-1 leading-none">Price In</p>
+                  <p className="text-xs sm:text-sm font-bold tabular-nums text-foreground/90">${trade.averageCost.toFixed(2)}</p>
                 </div>
-                <div className="p-3">
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-widest mb-1 leading-none">Contracts</p>
-                  <p className="text-sm font-bold tabular-nums text-foreground/90">{trade.contractsPurchased.toLocaleString()}</p>
+                <div className="p-2 sm:p-3">
+                  <p className="text-[8px] uppercase text-muted-foreground font-black tracking-[0.15em] mb-1 leading-none">Size</p>
+                  <p className="text-xs sm:text-sm font-bold tabular-nums text-foreground/90">{trade.contractsPurchased.toLocaleString()}</p>
                 </div>
-                <div className="p-3 text-right">
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-widest mb-1 leading-none">Total In</p>
-                  <p className="text-sm font-bold tabular-nums text-primary">${totalCostOpen.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                <div className="p-2 sm:p-3 text-right">
+                  <p className="text-[8px] uppercase text-muted-foreground font-black tracking-[0.15em] mb-1 leading-none">Total In</p>
+                  <p className="text-xs sm:text-sm font-black tabular-nums text-primary">${totalCostOpen.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 </div>
               </div>
 
               {/* Row 2: Closing Position */}
-              <div className="grid grid-cols-3 border-b border-border bg-gray-50/30">
-                <div className="p-3">
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-widest mb-1 leading-none">Avg Price (Out)</p>
-                  <p className="text-sm font-bold tabular-nums text-foreground/90">${trade.priceAtClose?.toFixed(2) ?? "—"}</p>
+              <div className="grid grid-cols-3 border-b border-border">
+                <div className="p-2 sm:p-3">
+                  <p className="text-[8px] uppercase text-muted-foreground font-black tracking-[0.15em] mb-1 leading-none">Price Out</p>
+                  <p className="text-xs sm:text-sm font-bold tabular-nums text-foreground/90">${trade.priceAtClose?.toFixed(2) ?? "—"}</p>
                 </div>
-                <div className="p-3">
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-widest mb-1 leading-none">Sold</p>
-                  <p className="text-sm font-bold tabular-nums text-foreground/90">{trade.contractsSold?.toLocaleString() ?? "—"}</p>
+                <div className="p-2 sm:p-3">
+                  <p className="text-[8px] uppercase text-muted-foreground font-black tracking-[0.15em] mb-1 leading-none">Sold</p>
+                  <p className="text-xs sm:text-sm font-bold tabular-nums text-foreground/90">{trade.contractsSold?.toLocaleString() ?? "—"}</p>
                 </div>
-                <div className="p-3 text-right">
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-widest mb-1 leading-none">Total Out</p>
-                  <p className="text-sm font-bold tabular-nums text-primary">
+                <div className="p-2 sm:p-3 text-right">
+                  <p className="text-[8px] uppercase text-muted-foreground font-black tracking-[0.15em] mb-1 leading-none">Total Out</p>
+                  <p className="text-xs sm:text-sm font-black tabular-nums text-primary">
                     {trade.priceAtClose ? `$${totalValueClose.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "—"}
                   </p>
                 </div>
               </div>
 
               {/* Row 3: Profitability Metrics */}
-              <div className="grid grid-cols-3">
-                <div className="p-3">
-                  {/* Empty cell */}
+              <div className="grid grid-cols-3 bg-muted/5">
+                <div className="p-2 sm:p-3">
+                  {/* Ledger balancing space */}
                 </div>
-                <div className="p-3">
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-widest mb-1 leading-none">Return %</p>
-                  <p className={cn("text-sm font-black tabular-nums", isProfitable ? "text-accent" : "text-destructive")}>
+                <div className="p-2 sm:p-3">
+                  <p className="text-[8px] uppercase text-muted-foreground font-black tracking-[0.15em] mb-1 leading-none">Gain %</p>
+                  <p className={cn("text-xs sm:text-sm font-black tabular-nums", isProfitable ? "text-accent" : "text-destructive")}>
                     {trade.profitPercentage ? `${isProfitable ? '+' : ''}${trade.profitPercentage}%` : "—"}
                   </p>
                 </div>
-                <div className="p-3 text-right">
-                  <p className="text-[9px] uppercase text-muted-foreground font-black tracking-widest mb-1 leading-none">Profit/Loss</p>
+                <div className="p-2 sm:p-3 text-right">
+                  <p className="text-[8px] uppercase text-muted-foreground font-black tracking-[0.15em] mb-1 leading-none">Net P/L</p>
                   <div className="flex items-center justify-end gap-1">
-                    <p className={cn("text-sm font-black tabular-nums", isProfitable ? "text-accent" : "text-destructive")}>
+                    <p className={cn("text-xs sm:text-sm font-black tabular-nums", isProfitable ? "text-accent" : "text-destructive")}>
                       {trade.profitAmount ? `${isProfitable ? '+' : ''}$${trade.profitAmount.toLocaleString()}` : "—"}
                     </p>
                     {trade.profitAmount !== undefined && (isProfitable ? <ArrowUpRight className="h-3.5 w-3.5 text-accent" /> : <ArrowDownRight className="h-3.5 w-3.5 text-destructive" />)}
@@ -120,31 +120,31 @@ export function TradeCard({ trade }: TradeCardProps) {
             </div>
             
             <div className="flex items-center justify-between pt-3 max-w-sm">
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group/btn">
-                <div className="p-2 rounded-full group-hover/btn:bg-primary/10">
+              <button className="flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors group/btn">
+                <div className="p-2 rounded-none group-hover/btn:bg-primary/5">
                   <MessageSquare className="h-4 w-4" />
                 </div>
-                <span className="text-xs">12</span>
+                <span className="text-[10px] font-bold">12</span>
               </button>
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors group/btn">
-                <div className="p-2 rounded-full group-hover/btn:bg-accent/10">
+              <button className="flex items-center gap-1 text-muted-foreground hover:text-accent transition-colors group/btn">
+                <div className="p-2 rounded-none group-hover/btn:bg-accent/5">
                   <Repeat2 className="h-4 w-4" />
                 </div>
-                <span className="text-xs">8</span>
+                <span className="text-[10px] font-bold">8</span>
               </button>
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-destructive transition-colors group/btn">
-                <div className="p-2 rounded-full group-hover/btn:bg-destructive/10">
+              <button className="flex items-center gap-1 text-muted-foreground hover:text-destructive transition-colors group/btn">
+                <div className="p-2 rounded-none group-hover/btn:bg-destructive/5">
                   <Heart className="h-4 w-4" />
                 </div>
-                <span className="text-xs">45</span>
+                <span className="text-[10px] font-bold">45</span>
               </button>
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group/btn">
-                <div className="p-2 rounded-full group-hover/btn:bg-primary/10">
+              <button className="flex items-center text-muted-foreground hover:text-primary transition-colors group/btn">
+                <div className="p-2 rounded-none group-hover/btn:bg-primary/5">
                   <Bookmark className="h-4 w-4" />
                 </div>
               </button>
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group/btn">
-                <div className="p-2 rounded-full group-hover/btn:bg-primary/10">
+              <button className="flex items-center text-muted-foreground hover:text-primary transition-colors group/btn">
+                <div className="p-2 rounded-none group-hover/btn:bg-primary/5">
                   <Share className="h-4 w-4" />
                 </div>
               </button>

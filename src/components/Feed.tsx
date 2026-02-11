@@ -7,6 +7,7 @@ import { TradeCard } from "./TradeCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bell, SlidersHorizontal, ArrowDownWideNarrow, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function Feed() {
   const [activeTab, setActiveTab] = useState("all");
@@ -25,9 +26,11 @@ export function Feed() {
         <div className="sm:hidden px-4 py-3 flex items-center justify-between">
           <div className="w-8" />
           <Zap className="h-6 w-6 text-primary fill-primary" />
-          <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
-            <Bell className="h-4 w-4" />
-          </Button>
+          <Link href="/notifications">
+            <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 hover:bg-muted/30 hover:text-primary transition-colors">
+              <Bell className="h-4 w-4" />
+            </Button>
+          </Link>
         </div>
 
         {/* Desktop Title */}

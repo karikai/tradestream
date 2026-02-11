@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { MOCK_TRADES } from "@/lib/mock-data";
 import { TradeCard } from "./TradeCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SlidersHorizontal, ArrowDownWideNarrow, Zap } from "lucide-react";
+import { Bell, SlidersHorizontal, ArrowDownWideNarrow, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Feed() {
@@ -26,7 +26,7 @@ export function Feed() {
           <div className="w-8" />
           <Zap className="h-6 w-6 text-primary fill-primary" />
           <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
-            <SlidersHorizontal className="h-4 w-4" />
+            <Bell className="h-4 w-4" />
           </Button>
         </div>
 

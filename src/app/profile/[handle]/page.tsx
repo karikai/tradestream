@@ -71,10 +71,10 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
             </div>
             <div className="flex justify-end p-4 gap-2">
               {isMe ? (
-                <Button variant="outline" className="rounded-full font-bold">Edit profile</Button>
+                <Button variant="outline" className="rounded-full font-bold hover:bg-muted/30 transition-colors">Edit profile</Button>
               ) : (
                 <>
-                  <Button variant="outline" className="rounded-full font-bold">Follow</Button>
+                  <Button variant="outline" className="rounded-full font-bold hover:bg-muted/30 transition-colors">Follow</Button>
                   {group && (
                     <Link href={`/checkout/${group.id}`}>
                       <Button className="rounded-full font-bold bg-primary hover:bg-primary/90 gap-2">

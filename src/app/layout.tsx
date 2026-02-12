@@ -2,6 +2,8 @@
 import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { PWAProvider } from '@/components/PWAProvider';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'TradeStream | Live Options Trade Feed',
@@ -39,9 +41,12 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className="font-body antialiased selection:bg-accent/30 selection:text-foreground">
-        <PWAProvider>
-          {children}
-        </PWAProvider>
+        <FirebaseClientProvider>
+          <PWAProvider>
+            {children}
+            <Toaster />
+          </PWAProvider>
+        </FirebaseClientProvider>
       </body>
     </html>
   );

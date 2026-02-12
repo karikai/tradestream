@@ -5,81 +5,50 @@ import { useState } from "react";
 import { SidebarNavigation } from "@/components/SidebarNavigation";
 import { RightSidebar } from "@/components/RightSidebar";
 import { MobileNav } from "@/components/MobileNav";
-import { useUser, useAuth } from "@/firebase";
-import { updateProfile, updateEmail, sendPasswordResetEmail } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { KeyRound, User, Mail, ShieldCheck } from "lucide-react";
+import { User, MapPin, Globe, AtSign, AlignLeft } from "lucide-react";
 
 export default function SettingsPage() {
-  const { user } = useUser();
-  const auth = useAuth();
   const { toast } = useToast();
 
-  const [displayName, setDisplayName] = useState(user?.displayName || "");
-  const [email, setEmail] = useState(user?.email || "");
-  const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
-  const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
+  // Local state for form fields
+  const [formData, setFormData] = useState({
+    displayName: "John Doe",
+    username: "johndoe_trading",
+    location: "Financial District, NY",
+    bio: "Professional coffee drinker and part-time index trader.",
+    websiteUrl: "https://tradestream.io",
+  });
 
-  const handleUpdateProfile = async () => {
-    if (!auth.currentUser) return;
-    setIsUpdatingProfile(true);
-    try {
-      await updateProfile(auth.currentUser, { displayName });
-      toast({
-        title: "Profile updated",
-        description: "Your display name has been updated successfully.",
-      });
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Update failed",
-        description: error.message,
-      });
-    } finally {
-      setIsUpdatingProfile(false);
-    }
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleUpdateEmail = async () => {
-    if (!auth.currentUser) return;
-    setIsUpdatingEmail(true);
-    try {
-      // Note: Firebase updateEmail requires a recent login
-      await updateEmail(auth.currentUser, email);
+  const handleSaveSettings = async () => {
+    setIsSaving(true);
+    
+    // Simulate API call logic
+    setTimeout(() => {
+      setIsSaving(false);
       toast({
-        title: "Email updated",
-        description: "Your email address has been updated successfully.",
+        title: "Settings saved",
+        description: "Your profile information has been updated successfully.",
       });
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Update failed",
-        description: "Email updates may require a recent login for security.",
-      });
-    } finally {
-      setIsUpdatingEmail(false);
-    }
-  };
+    }, 1000);
 
-  const handlePasswordReset = async () => {
-    if (!user?.email) return;
-    try {
-      await sendPasswordResetEmail(auth, user.email);
-      toast({
-        title: "Reset link sent",
-        description: `A password reset link has been sent to ${user.email}`,
-      });
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
-      });
-    }
+    /* 
+    Real logic would go here:
+    - Update Firestore user document
+    - Update Firebase Auth profile if necessary
+    */
   };
 
   return (
@@ -97,101 +66,112 @@ export default function SettingsPage() {
           </div>
 
           <div className="p-4 space-y-6">
-            {/* Profile Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+            <Card className="border-none shadow-none">
+              <CardHeader className="px-0">
+                <CardTitle className="text-lg font-black font-headline flex items-center gap-2">
                   <User className="h-5 w-5 text-primary" />
-                  Public Profile
+                  Edit Profile
                 </CardTitle>
-                <CardDescription>Update your public-facing information.</CardDescription>
+                <CardDescription>
+                  This information will be displayed publicly on your profile page.
+                </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="px-0 space-y-6">
+                {/* Display Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="displayName">Display Name</Label>
-                  <Input 
-                    id="displayName" 
-                    value={displayName} 
-                    onChange={(e) => setDisplayName(e.target.value)}
-                    placeholder="Enter your name"
-                  />
-                </div>
-              </CardContent>
-              <CardFooter className="border-t bg-muted/20 px-6 py-4">
-                <Button 
-                  onClick={handleUpdateProfile} 
-                  disabled={isUpdatingProfile}
-                  className="rounded-full font-bold ml-auto"
-                >
-                  {isUpdatingProfile ? "Saving..." : "Save Changes"}
-                </Button>
-              </CardFooter>
-            </Card>
-
-            {/* Account Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Mail className="h-5 w-5 text-primary" />
-                  Account Email
-                </CardTitle>
-                <CardDescription>Change the email address associated with your account.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input 
-                    id="email" 
-                    type="email"
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="email@example.com"
-                  />
-                </div>
-              </CardContent>
-              <CardFooter className="border-t bg-muted/20 px-6 py-4">
-                <Button 
-                  onClick={handleUpdateEmail} 
-                  disabled={isUpdatingEmail}
-                  className="rounded-full font-bold ml-auto"
-                >
-                  {isUpdatingEmail ? "Updating..." : "Update Email"}
-                </Button>
-              </CardFooter>
-            </Card>
-
-            {/* Security Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <KeyRound className="h-5 w-5 text-primary" />
-                  Security
-                </CardTitle>
-                <CardDescription>Manage your account security and password.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-muted/30 rounded-xl border border-border">
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-bold">Reset Password</p>
-                    <p className="text-xs text-muted-foreground">Receive a reset link via email.</p>
+                  <Label htmlFor="displayName" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                    Display Name
+                  </Label>
+                  <div className="relative group">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Input 
+                      id="displayName" 
+                      value={formData.displayName} 
+                      onChange={handleInputChange}
+                      placeholder="Enter your name"
+                      className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
+                    />
                   </div>
-                  <Button variant="outline" size="sm" onClick={handlePasswordReset} className="rounded-full font-bold">
-                    Send Link
-                  </Button>
+                </div>
+
+                {/* Username */}
+                <div className="space-y-2">
+                  <Label htmlFor="username" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                    Username
+                  </Label>
+                  <div className="relative group">
+                    <AtSign className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Input 
+                      id="username" 
+                      value={formData.username} 
+                      onChange={handleInputChange}
+                      placeholder="username"
+                      className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
+                    />
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                    Location
+                  </Label>
+                  <div className="relative group">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Input 
+                      id="location" 
+                      value={formData.location} 
+                      onChange={handleInputChange}
+                      placeholder="City, Country"
+                      className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
+                    />
+                  </div>
+                </div>
+
+                {/* Website URL */}
+                <div className="space-y-2">
+                  <Label htmlFor="websiteUrl" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                    Website
+                  </Label>
+                  <div className="relative group">
+                    <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Input 
+                      id="websiteUrl" 
+                      value={formData.websiteUrl} 
+                      onChange={handleInputChange}
+                      placeholder="https://yourwebsite.com"
+                      className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
+                    />
+                  </div>
+                </div>
+
+                {/* Bio */}
+                <div className="space-y-2">
+                  <Label htmlFor="bio" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                    Bio
+                  </Label>
+                  <div className="relative group">
+                    <AlignLeft className="absolute left-3 top-3 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Textarea 
+                      id="bio" 
+                      value={formData.bio} 
+                      onChange={handleInputChange}
+                      placeholder="Tell us about yourself..."
+                      className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary min-h-[100px] resize-none"
+                    />
+                  </div>
                 </div>
               </CardContent>
+              <CardFooter className="px-0 pt-6">
+                <Button 
+                  onClick={handleSaveSettings} 
+                  disabled={isSaving}
+                  className="w-full rounded-full font-bold h-12 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/10"
+                >
+                  {isSaving ? "Saving..." : "Save Changes"}
+                </Button>
+              </CardFooter>
             </Card>
-
-            <div className="p-4 bg-primary/5 rounded-2xl border border-primary/10 flex items-start gap-3">
-              <ShieldCheck className="h-5 w-5 text-primary shrink-0" />
-              <div className="space-y-1">
-                <h4 className="text-xs font-black uppercase tracking-widest text-primary">Verification</h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Verified badges are currently issued to high-volume traders. 
-                  Reach out to support if you'd like to apply for a verified checkmark.
-                </p>
-              </div>
-            </div>
           </div>
         </main>
 

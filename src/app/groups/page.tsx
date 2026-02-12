@@ -1,4 +1,3 @@
-
 "use client";
 
 import { SidebarNavigation } from "@/components/SidebarNavigation";
@@ -31,7 +30,7 @@ export default function GroupsPage() {
         <main className="flex-1 min-w-0 max-w-2xl sm:border-x border-border bg-white min-h-screen">
           <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border p-4 flex items-center justify-between">
             <h1 className="text-xl font-black font-headline tracking-tighter">Groups</h1>
-            <Button variant="outline" size="sm" className="rounded-full font-bold gap-2">
+            <Button variant="outline" size="sm" className="rounded-full font-bold gap-2 hover:bg-primary/5 hover:text-primary border-primary/20 transition-colors">
               <Sparkles className="h-4 w-4 text-primary" />
               Create Group
             </Button>

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { MOCK_TRADES } from "@/lib/mock-data";
 import { TradeCard } from "./TradeCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bell, SlidersHorizontal, ArrowDownWideNarrow, Zap } from "lucide-react";
+import { Bell, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -62,22 +62,6 @@ export function Feed() {
       </div>
 
       <div className="divide-y divide-border">
-        <div className="p-3 sm:p-4 border-b border-border flex items-center gap-2 overflow-x-auto scrollbar-hide">
-          <Button variant="outline" size="sm" className="rounded-full text-[10px] sm:text-xs font-bold gap-1.5 bg-muted/50 border-none shrink-0 h-8">
-            <ArrowDownWideNarrow className="h-3 w-3" />
-            Ticker
-          </Button>
-          <Button variant="outline" size="sm" className="rounded-full text-[10px] sm:text-xs font-bold gap-2 bg-muted/50 border-none shrink-0 h-8">
-            Type: All
-          </Button>
-          <Button variant="outline" size="sm" className="rounded-full text-[10px] sm:text-xs font-bold gap-2 bg-muted/50 border-none shrink-0 h-8">
-            Min Size: 50
-          </Button>
-          <Button variant="outline" size="sm" className="rounded-full text-[10px] sm:text-xs font-bold gap-2 bg-muted/50 border-none shrink-0 h-8">
-            Exp: Any
-          </Button>
-        </div>
-
         {isLoading ? (
           Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="p-4 space-y-3 animate-pulse">

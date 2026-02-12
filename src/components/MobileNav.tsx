@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 import { PostTradeDialog } from "./PostTradeDialog";
 
 const NAV_ITEMS = [
-  { icon: Home, label: "Home", href: "/" },
-  { icon: Users, label: "Groups", href: "/groups" },
-  { icon: Mail, label: "Messages", href: "/messages" },
-  { icon: Search, label: "Search", href: "/search" },
-  { icon: User, label: "Profile", href: "/profile/johndoe_trading" },
+  { icon: Home, label: "Home", href: "/dashboard" },
+  { icon: Users, label: "Groups", href: "/dashboard/groups" },
+  { icon: Mail, label: "Messages", href: "/dashboard/messages" },
+  { icon: Search, label: "Search", href: "/dashboard/search" },
+  { icon: User, label: "Profile", href: "/dashboard/profile/johndoe_trading" },
 ];
 
 export function MobileNav() {

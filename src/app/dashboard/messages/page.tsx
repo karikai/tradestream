@@ -43,7 +43,7 @@ export default function MessagesPage() {
               MOCK_MESSAGE_THREADS.map((thread) => (
                 <Link 
                   key={thread.id} 
-                  href={`/messages/${thread.id}`}
+                  href={`/dashboard/messages/${thread.id}`}
                   className={cn(
                     "p-4 flex gap-4 transition-colors cursor-pointer hover:bg-muted/30 border-l-4 block",
                     thread.unread ? "border-primary bg-primary/5" : "border-transparent"

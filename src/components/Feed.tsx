@@ -25,7 +25,7 @@ export function Feed() {
         <div className="sm:hidden px-4 py-3 flex items-center justify-between">
           <div className="w-8" />
           <Zap className="h-6 w-6 text-primary fill-primary" />
-          <Link href="/notifications">
+          <Link href="/dashboard/notifications">
             <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 hover:bg-muted/30 hover:text-primary transition-colors">
               <Bell className="h-4 w-4" />
             </Button>

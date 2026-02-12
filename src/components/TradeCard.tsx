@@ -23,7 +23,7 @@ export function TradeCard({ trade }: TradeCardProps) {
   return (
     <Card className="rounded-none border-x-0 border-t-0 shadow-none hover:bg-muted/10 transition-colors cursor-pointer p-4 group">
       <div className="flex gap-3">
-        <Link href={`/profile/${trade.user.handle}`} className="shrink-0" onClick={(e) => e.stopPropagation()}>
+        <Link href={`/dashboard/profile/${trade.user.handle}`} className="shrink-0" onClick={(e) => e.stopPropagation()}>
           <Avatar className="h-10 w-10">
             <AvatarImage src={trade.user.avatar} alt={trade.user.name} />
             <AvatarFallback>{trade.user.name.charAt(0)}</AvatarFallback>
@@ -33,7 +33,7 @@ export function TradeCard({ trade }: TradeCardProps) {
         <div className="flex-1 space-y-1">
           <div className="flex items-center gap-1">
             <Link 
-              href={`/profile/${trade.user.handle}`} 
+              href={`/dashboard/profile/${trade.user.handle}`} 
               className="font-bold text-sm hover:underline flex items-center gap-0.5"
               onClick={(e) => e.stopPropagation()}
             >

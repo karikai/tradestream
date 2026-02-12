@@ -27,7 +27,7 @@ export default function GroupDetailPage({ params }: { params: Promise<{ groupId:
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-4">
           <h1 className="text-2xl font-bold">Group not found</h1>
-          <Link href="/groups">
+          <Link href="/dashboard/groups">
             <Button variant="link">Return to groups</Button>
           </Link>
         </div>
@@ -62,7 +62,7 @@ export default function GroupDetailPage({ params }: { params: Promise<{ groupId:
           {/* Header */}
           <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border flex items-center justify-between px-4 py-3">
             <div className="flex items-center gap-4">
-              <Link href="/groups">
+              <Link href="/dashboard/groups">
                 <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
                   <ArrowLeft className="h-5 w-5" />
                 </Button>

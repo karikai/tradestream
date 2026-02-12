@@ -9,11 +9,11 @@ import { Button } from "@/components/ui/button";
 import { PostTradeDialog } from "./PostTradeDialog";
 
 const NAV_ITEMS = [
-  { icon: Home, label: "Home", href: "/" },
-  { icon: Search, label: "Search", href: "/search" },
-  { icon: Users, label: "Groups", href: "/groups" },
-  { icon: User, label: "Profile", href: "/profile/johndoe_trading" },
-  { icon: Settings, label: "Settings", href: "/settings" },
+  { icon: Home, label: "Home", href: "/dashboard" },
+  { icon: Search, label: "Search", href: "/dashboard/search" },
+  { icon: Users, label: "Groups", href: "/dashboard/groups" },
+  { icon: User, label: "Profile", href: "/dashboard/profile/johndoe_trading" },
+  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
 ];
 
 export function SidebarNavigation() {
@@ -22,7 +22,7 @@ export function SidebarNavigation() {
   return (
     <div className="h-full flex flex-col justify-between p-4 bg-background border-r border-border sticky top-0">
       <div className="space-y-6">
-        <Link href="/" className="flex items-center gap-2 px-2 text-primary">
+        <Link href="/dashboard" className="flex items-center gap-2 px-2 text-primary">
           <div className="p-2 rounded-xl bg-primary text-white">
             <Zap className="h-6 w-6 fill-white" />
           </div>
@@ -56,7 +56,7 @@ export function SidebarNavigation() {
       </div>
 
       <div className="mt-auto pb-4">
-        <Link href="/profile/johndoe_trading" className="flex items-center gap-3 p-3 w-full rounded-full hover:bg-muted transition-colors text-left">
+        <Link href="/dashboard/profile/johndoe_trading" className="flex items-center gap-3 p-3 w-full rounded-full hover:bg-muted transition-colors text-left">
           <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-bold">
             JD
           </div>

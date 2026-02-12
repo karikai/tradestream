@@ -46,7 +46,7 @@ export default function GroupsPage() {
               {myGroups.length > 0 ? (
                 <div className="grid gap-4">
                   {myGroups.map((group) => (
-                    <Link key={group.id} href={`/groups/${group.id}`}>
+                    <Link key={group.id} href={`/dashboard/groups/${group.id}`}>
                       <Card className="overflow-hidden border-primary/10 hover:border-primary/30 transition-colors group cursor-pointer">
                         <CardContent className="p-0">
                           <div className="p-4 flex gap-4">

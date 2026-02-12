@@ -50,7 +50,7 @@ export default function SearchPage() {
                   key={user.id}
                   className="p-4 flex items-start gap-3 hover:bg-muted/30 transition-colors group cursor-pointer"
                 >
-                  <Link href={`/profile/${user.handle}`} className="shrink-0">
+                  <Link href={`/dashboard/profile/${user.handle}`} className="shrink-0">
                     <Avatar className="h-12 w-12">
                       <AvatarImage src={user.avatar} />
                       <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
@@ -59,7 +59,7 @@ export default function SearchPage() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <Link href={`/profile/${user.handle}`} className="min-w-0">
+                      <Link href={`/dashboard/profile/${user.handle}`} className="min-w-0">
                         <div className="flex items-center gap-0.5">
                           <span className="font-bold text-sm truncate hover:underline">
                             {user.name}

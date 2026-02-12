@@ -45,7 +45,7 @@ export default function NotificationsPage() {
                   
                   <div className="flex-1 space-y-2">
                     {notification.user && (
-                      <Link href={`/profile/${notification.user.handle}`}>
+                      <Link href={`/dashboard/profile/${notification.user.handle}`}>
                         <Avatar className="h-8 w-8 mb-2">
                           <AvatarImage src={notification.user.avatar} />
                           <AvatarFallback>{notification.user.name.charAt(0)}</AvatarFallback>
@@ -57,7 +57,7 @@ export default function NotificationsPage() {
                       <span className="text-sm">
                         {notification.user ? (
                           <>
-                            <Link href={`/profile/${notification.user.handle}`} className="font-bold hover:underline">
+                            <Link href={`/dashboard/profile/${notification.user.handle}`} className="font-bold hover:underline">
                               {notification.user.name}
                             </Link>{" "}
                             {notification.message}

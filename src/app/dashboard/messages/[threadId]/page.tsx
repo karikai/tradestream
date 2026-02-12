@@ -31,7 +31,7 @@ export default function MessageThreadPage({ params }: { params: Promise<{ thread
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-4">
           <h1 className="text-2xl font-bold">Thread not found</h1>
-          <Link href="/messages">
+          <Link href="/dashboard/messages">
             <Button variant="link">Return to messages</Button>
           </Link>
         </div>
@@ -52,7 +52,7 @@ export default function MessageThreadPage({ params }: { params: Promise<{ thread
           {/* Sticky Header */}
           <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border flex items-center justify-between px-4 py-2">
             <div className="flex items-center gap-4">
-              <Link href="/messages">
+              <Link href="/dashboard/messages">
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <ArrowLeft className="h-5 w-5" />
                 </Button>

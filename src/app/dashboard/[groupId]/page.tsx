@@ -20,7 +20,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ groupId: st
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-4">
           <h1 className="text-2xl font-bold">Group not found</h1>
-          <Link href="/groups">
+          <Link href="/dashboard/groups">
             <Button variant="link">Return to groups</Button>
           </Link>
         </div>
@@ -40,7 +40,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ groupId: st
         <main className="flex-1 min-w-0 max-w-2xl sm:border-x border-border bg-gray-50/50 min-h-screen flex flex-col">
           {/* Header */}
           <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border flex items-center gap-4 px-4 py-3">
-            <Link href={`/profile/${group.creator.handle}`}>
+            <Link href={`/dashboard/profile/${group.creator.handle}`}>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <ArrowLeft className="h-5 w-5" />
               </Button>

@@ -76,7 +76,7 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
                 <>
                   <Button variant="outline" className="rounded-full font-bold hover:bg-muted/30 transition-colors">Follow</Button>
                   {group && (
-                    <Link href={`/checkout/${group.id}`}>
+                    <Link href={`/dashboard/checkout/${group.id}`}>
                       <Button className="rounded-full font-bold bg-primary hover:bg-primary/90 gap-2">
                         <Lock className="h-4 w-4" />
                         Join Group

@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Zap, Mail, Lock, User, Loader2, ArrowRight, AtSign } from "lucide-react";
+import { Zap, Mail, Lock, User, Loader2, ArrowRight, AtSign, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useAuth, useUser } from "@/firebase";
 import { initiateEmailSignUp } from "@/firebase/non-blocking-login";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -25,6 +26,12 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Validation states
+  const isNameValid = name.trim().length >= 2;
+  const isUsernameValid = username.startsWith('@') ? username.length >= 4 : username.length >= 3;
+  const isEmailValid = /^\S+@\S+\.\S+$/.test(email);
+  const isPasswordValid = password.length >= 6;
+
   // Redirect if already logged in
   useEffect(() => {
     if (!isUserLoading && user) {
@@ -34,12 +41,18 @@ export default function SignupPage() {
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password || !name || !username) return;
+    if (!isEmailValid || !isPasswordValid || !isNameValid || !isUsernameValid) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: "Please check that all fields are filled out correctly.",
+      });
+      return;
+    }
     
     setIsSubmitting(true);
     try {
       initiateEmailSignUp(auth, email, password);
-      // Non-blocking call. useUser picks up the state change.
     } catch (error: any) {
       setIsSubmitting(false);
       toast({
@@ -57,6 +70,19 @@ export default function SignupPage() {
       </div>
     );
   }
+
+  const ValidationIcon = ({ isValid, value }: { isValid: boolean; value: string }) => {
+    if (!value) return null;
+    return (
+      <div className="absolute right-3 top-1/2 -translate-y-1/2 animate-in fade-in zoom-in duration-200">
+        {isValid ? (
+          <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+        ) : (
+          <XCircle className="h-4 w-4 text-destructive" />
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -84,10 +110,11 @@ export default function SignupPage() {
                     id="name" 
                     placeholder="John Doe" 
                     required 
-                    className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary h-12"
+                    className="pl-10 pr-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary h-12"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
+                  <ValidationIcon isValid={isNameValid} value={name} />
                 </div>
               </div>
               <div className="space-y-2">
@@ -98,10 +125,11 @@ export default function SignupPage() {
                     id="username" 
                     placeholder="@johndoe67" 
                     required 
-                    className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary h-12"
+                    className="pl-10 pr-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary h-12"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
+                  <ValidationIcon isValid={isUsernameValid} value={username} />
                 </div>
               </div>
               <div className="space-y-2">
@@ -113,10 +141,11 @@ export default function SignupPage() {
                     type="email" 
                     placeholder="name@example.com" 
                     required 
-                    className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary h-12"
+                    className="pl-10 pr-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary h-12"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
+                  <ValidationIcon isValid={isEmailValid} value={email} />
                 </div>
               </div>
               <div className="space-y-2">
@@ -128,10 +157,11 @@ export default function SignupPage() {
                     type="password" 
                     placeholder="••••••••"
                     required 
-                    className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary h-12"
+                    className="pl-10 pr-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary h-12"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  <ValidationIcon isValid={isPasswordValid} value={password} />
                 </div>
               </div>
             </CardContent>

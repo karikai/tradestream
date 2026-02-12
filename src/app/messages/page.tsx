@@ -7,7 +7,7 @@ import { MobileNav } from "@/components/MobileNav";
 import { MOCK_MESSAGE_THREADS } from "@/lib/mock-data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Mail, Search, Settings, Verified } from "lucide-react";
+import { Mail, Search, Verified } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -27,9 +27,6 @@ export default function MessagesPage() {
           <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border flex items-center justify-between px-4 py-4">
             <h1 className="text-xl font-black font-headline tracking-tighter">Messages</h1>
             <div className="flex gap-2">
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Settings className="h-5 w-5" />
-              </Button>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Mail className="h-5 w-5" />
               </Button>

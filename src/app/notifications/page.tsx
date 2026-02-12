@@ -6,8 +6,7 @@ import { RightSidebar } from "@/components/RightSidebar";
 import { MobileNav } from "@/components/MobileNav";
 import { MOCK_NOTIFICATIONS } from "@/lib/mock-data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Heart, Repeat2, UserPlus, Zap, Bell, Settings } from "lucide-react";
+import { Heart, Repeat2, UserPlus, Zap } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -25,9 +24,6 @@ export default function NotificationsPage() {
         <main className="flex-1 min-w-0 max-w-2xl sm:border-x border-border bg-white">
           <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border flex items-center justify-between px-4 py-4">
             <h1 className="text-xl font-black font-headline tracking-tighter">Notifications</h1>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Settings className="h-5 w-5" />
-            </Button>
           </div>
 
           <div className="divide-y divide-border">

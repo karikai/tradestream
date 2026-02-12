@@ -6,7 +6,7 @@ import { RightSidebar } from "@/components/RightSidebar";
 import { MobileNav } from "@/components/MobileNav";
 import { MOCK_TRADES } from "@/lib/mock-data";
 import { TradeCard } from "@/components/TradeCard";
-import { Bookmark, Settings } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function BookmarksPage() {
@@ -28,9 +28,6 @@ export default function BookmarksPage() {
               <h1 className="text-xl font-black font-headline tracking-tighter">Bookmarks</h1>
               <p className="text-xs text-muted-foreground">@johndoe_trading</p>
             </div>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Settings className="h-5 w-5" />
-            </Button>
           </div>
 
           <div className="divide-y divide-border">

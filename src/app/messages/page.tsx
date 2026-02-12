@@ -26,11 +26,6 @@ export default function MessagesPage() {
         <main className="flex-1 min-w-0 max-w-2xl sm:border-x border-border bg-white">
           <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border flex items-center justify-between px-4 py-4">
             <h1 className="text-xl font-black font-headline tracking-tighter">Messages</h1>
-            <div className="flex gap-2">
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Mail className="h-5 w-5" />
-              </Button>
-            </div>
           </div>
 
           <div className="p-4 border-b border-border">

@@ -3,18 +3,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Bell, Mail, Bookmark, User, Settings, Zap, TrendingUp, MoreHorizontal, Users } from "lucide-react";
+import { Home, Search, Bell, Mail, Bookmark, User, Settings, Zap, TrendingUp, MoreHorizontal, Users, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { PostTradeDialog } from "./PostTradeDialog";
 
 const NAV_ITEMS = [
   { icon: Home, label: "Home", href: "/" },
   { icon: Search, label: "Search", href: "/search" },
-  // { icon: TrendingUp, label: "Trends", href: "/trends" },
   { icon: Users, label: "Groups", href: "/groups" },
-  // { icon: Bell, label: "Notifications", href: "/notifications" },
-  // { icon: Mail, label: "Messages", href: "/messages" },
-  // { icon: Bookmark, label: "Bookmarks", href: "/bookmarks" },
   { icon: User, label: "Profile", href: "/profile/johndoe_trading" },
   { icon: Settings, label: "Settings", href: "/settings" },
 ];
@@ -48,10 +45,14 @@ export function SidebarNavigation() {
           ))}
         </nav>
 
-        <Button className="w-full rounded-full py-6 text-lg font-bold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20">
-          <span className="hidden lg:inline">Post Trade</span>
-          <Zap className="h-5 w-5 lg:hidden" />
-        </Button>
+        <PostTradeDialog 
+          trigger={
+            <Button className="w-full rounded-full py-6 text-lg font-bold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20">
+              <span className="hidden lg:inline">Post Trade</span>
+              <Plus className="h-5 w-5 lg:hidden" />
+            </Button>
+          }
+        />
       </div>
 
       <div className="mt-auto pb-4">

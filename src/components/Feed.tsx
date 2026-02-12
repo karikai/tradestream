@@ -1,16 +1,24 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
 import { MOCK_TRADES } from "@/lib/mock-data";
 import { TradeCard } from "./TradeCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bell, Zap } from "lucide-react";
+import { Bell, Zap, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useAuth } from "@/firebase";
+import { signOut } from "firebase/auth";
 
 export function Feed() {
   const [activeTab, setActiveTab] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
+  const auth = useAuth();
+
+  const handleSignOut = () => {
+    signOut(auth);
+  };
 
   // Simulate loading new trades
   useEffect(() => {
@@ -23,7 +31,14 @@ export function Feed() {
       <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-border">
         {/* Mobile Header */}
         <div className="sm:hidden px-4 py-3 flex items-center justify-between">
-          <div className="w-8" />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="rounded-full h-8 w-8 hover:bg-muted/30 text-muted-foreground"
+            onClick={handleSignOut}
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
           <Zap className="h-6 w-6 text-primary fill-primary" />
           <Link href="/dashboard/notifications">
             <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 hover:bg-muted/30 hover:text-primary transition-colors">

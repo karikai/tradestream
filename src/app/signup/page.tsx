@@ -9,13 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth, useUser } from "@/firebase";
-import { initiateEmailSignUp } from "@/firebase/non-blocking-login";
+import { useAuth, useCollection, useFirestore, useUser } from "@/firebase";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { addDoc, collection, CollectionReference, doc, DocumentReference, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function SignupPage() {
   const router = useRouter();
+  const firestore = useFirestore();
   const auth = useAuth();
   const { user, isUserLoading } = useUser();
   const { toast } = useToast();
@@ -39,7 +41,7 @@ export default function SignupPage() {
     }
   }, [user, isUserLoading, router]);
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isEmailValid || !isPasswordValid || !isNameValid || !isUsernameValid) {
       toast({
@@ -52,7 +54,19 @@ export default function SignupPage() {
     
     setIsSubmitting(true);
     try {
-      initiateEmailSignUp(auth, email, password);
+      createUserWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        setDoc(doc(firestore,`users/${user.user.uid}`), {
+          'uid': user.user.uid,
+          'email': email,
+          'name': name,
+          'username': username,
+          'dateCreated': new Date().getTime().toString(),
+        })
+      })
+      .catch(() => {
+        throw new Error("AuthError");
+      })
     } catch (error: any) {
       setIsSubmitting(false);
       toast({

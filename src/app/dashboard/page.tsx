@@ -3,7 +3,6 @@ import { SidebarNavigation } from "@/components/SidebarNavigation";
 import { Feed } from "@/components/Feed";
 import { RightSidebar } from "@/components/RightSidebar";
 import { MobileNav } from "@/components/MobileNav";
-import { AuthGuard } from "@/components/AuthGuard";
 
 export default function Home() {
   return (

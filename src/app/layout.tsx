@@ -3,6 +3,7 @@ import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { PWAProvider } from '@/components/PWAProvider';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { AppDataProvider } from '@/context/app-data-context';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
@@ -42,10 +43,12 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased selection:bg-accent/30 selection:text-foreground">
         <FirebaseClientProvider>
-          <PWAProvider>
-            {children}
-            <Toaster />
-          </PWAProvider>
+          <AppDataProvider>
+            <PWAProvider>
+              {children}
+              <Toaster />
+            </PWAProvider>
+          </AppDataProvider>
         </FirebaseClientProvider>
       </body>
     </html>

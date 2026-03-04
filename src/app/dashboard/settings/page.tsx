@@ -12,17 +12,22 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { User, MapPin, Globe, AtSign, AlignLeft } from "lucide-react";
+import { doc, setDoc } from "firebase/firestore";
+import { useFirestore } from "@/firebase";
+import { useAppData } from "@/context/app-data-context";
 
 export default function SettingsPage() {
+  const appData = useAppData()
+  const firestore = useFirestore();
   const { toast } = useToast();
 
   // Local state for form fields
   const [formData, setFormData] = useState({
-    displayName: "John Doe",
-    username: "johndoe_trading",
-    location: "Financial District, NY",
-    bio: "Professional coffee drinker and part-time index trader.",
-    websiteUrl: "https://tradestream.io",
+    displayName: appData.userData?.name,
+    username: appData.userData?.username,
+    // location: "Financial District, NY",
+    // bio: "Professional coffee drinker and part-time index trader.",
+    // websiteUrl: "https://tradestream.io",
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -34,15 +39,16 @@ export default function SettingsPage() {
 
   const handleSaveSettings = async () => {
     setIsSaving(true);
-    
-    // Simulate API call logic
-    setTimeout(() => {
-      setIsSaving(false);
-      toast({
-        title: "Settings saved",
-        description: "Your profile information has been updated successfully.",
-      });
-    }, 1000);
+
+    setDoc(doc(firestore,`users/${appData.userData?.uid}`), {
+      'displayName': formData.displayName,
+      'username': formData.username,
+    }, {merge: true})
+
+    toast({
+      title: "Settings saved",
+      description: "Your profile information has been updated successfully.",
+    });
 
     /* 
     Real logic would go here:
@@ -112,7 +118,7 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Location */}
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="location" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
                     Location
                   </Label>
@@ -126,10 +132,10 @@ export default function SettingsPage() {
                       className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
                     />
                   </div>
-                </div>
+                </div> */}
 
                 {/* Website URL */}
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="websiteUrl" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
                     Website
                   </Label>
@@ -143,10 +149,10 @@ export default function SettingsPage() {
                       className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
                     />
                   </div>
-                </div>
+                </div> */}
 
                 {/* Bio */}
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="bio" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
                     Bio
                   </Label>
@@ -160,7 +166,7 @@ export default function SettingsPage() {
                       className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary min-h-[100px] resize-none"
                     />
                   </div>
-                </div>
+                </div> */}
               </CardContent>
               <CardFooter className="px-0 pt-6">
                 <Button 

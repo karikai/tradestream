@@ -121,16 +121,16 @@ export function TradeCard({ trade }: TradeCardProps) {
             
             <div className="flex items-center justify-between pt-3 max-w-sm">
               <button className="flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors group/btn">
-                <div className="p-2 rounded-none group-hover/btn:bg-primary/5">
+                {/* <div className="p-2 rounded-none group-hover/btn:bg-primary/5">
                   <MessageSquare className="h-4 w-4" />
                 </div>
-                <span className="text-[10px] font-bold">12</span>
+                <span className="text-[10px] font-bold">12</span> */}
               </button>
               <button className="flex items-center gap-1 text-muted-foreground hover:text-accent transition-colors group/btn">
-                <div className="p-2 rounded-none group-hover/btn:bg-accent/5">
+                {/* <div className="p-2 rounded-none group-hover/btn:bg-accent/5">
                   <Repeat2 className="h-4 w-4" />
                 </div>
-                <span className="text-[10px] font-bold">8</span>
+                <span className="text-[10px] font-bold">8</span> */}
               </button>
               <button className="flex items-center gap-1 text-muted-foreground hover:text-destructive transition-colors group/btn">
                 <div className="p-2 rounded-none group-hover/btn:bg-destructive/5">
@@ -143,11 +143,11 @@ export function TradeCard({ trade }: TradeCardProps) {
                   <Bookmark className="h-4 w-4" />
                 </div>
               </button>
-              <button className="flex items-center text-muted-foreground hover:text-primary transition-colors group/btn">
+              {/* <button className="flex items-center text-muted-foreground hover:text-primary transition-colors group/btn">
                 <div className="p-2 rounded-none group-hover/btn:bg-primary/5">
                   <Share className="h-4 w-4" />
                 </div>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

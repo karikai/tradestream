@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import { SidebarNavigation } from "@/components/SidebarNavigation";
 import { RightSidebar } from "@/components/RightSidebar";
 import { MobileNav } from "@/components/MobileNav";
@@ -12,14 +12,68 @@ import { CalendarDays, Link as LinkIcon, MapPin, ArrowLeft, Verified, Lock } fro
 import Link from "next/link";
 import { format } from "date-fns";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
+import { useFirestore } from "@/firebase";
+import { Trade, User } from "@/lib/types";
+import { useAppData } from "@/context/app-data-context";
 
 export default function ProfilePage({ params }: { params: Promise<{ handle: string }> }) {
   const { handle } = use(params);
-  
-  const user = MOCK_USERS.find(u => u.handle.toLowerCase() === handle.toLowerCase());
-  const userTrades = MOCK_TRADES.filter(t => t.user.handle.toLowerCase() === handle.toLowerCase());
+  const firestore = useFirestore();
+  const appData = useAppData()
+  const [user, setUser] = useState<User | null>(null);
+  const [userTrades, setUserTrades] = useState<Trade[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(handle)
+
+        // 🔹 Fetch user
+        let userData = null;
+        const usersRef = collection(firestore, "users");
+        const usersQuery = query(usersRef, where("username", "==", handle));
+        const usersSnapshot = await getDocs(usersQuery);
+
+        if (!usersSnapshot.empty) {
+          userData = usersSnapshot.docs[0].data() as User;
+          setUser(userData);
+        } else {
+          setUser(null);
+        }
+
+
+        // 🔹 Fetch trades
+        const tradesRef = collection(firestore, "trades");
+        const tradesQuery = query(tradesRef, where("user", "==", userData?.id));
+        const tradesSnapshot = await getDocs(tradesQuery);
+
+        console.log(tradesSnapshot)
+
+
+        const trades: Trade[] = tradesSnapshot.docs.map(
+          (doc) => doc.data() as Trade
+        );
+
+        trades.forEach((trade) => {
+          //@ts-ignore
+          trade.user = userData
+        })
+
+        setUserTrades(trades);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [handle, firestore]);
+
   const group = MOCK_GROUPS.find(g => g.creator.handle.toLowerCase() === handle.toLowerCase());
-  const isMe = handle.toLowerCase() === 'johndoe_trading';
+  const isMe = handle.toLowerCase() === appData.userData?.username
 
   if (!user) {
     return (
@@ -71,7 +125,11 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
             </div>
             <div className="flex justify-end p-4 gap-2">
               {isMe ? (
-                <Button variant="outline" className="rounded-full font-bold hover:bg-muted/30 transition-colors">Edit profile</Button>
+                <Button variant="outline" className="rounded-full font-bold hover:bg-muted/30 transition-colors">
+                  <Link href={'/dashboard/settings'}>
+                    Edit profile
+                  </Link>
+                </Button>
               ) : (
                 <>
                   <Button variant="outline" className="rounded-full font-bold hover:bg-muted/30 transition-colors">Follow</Button>

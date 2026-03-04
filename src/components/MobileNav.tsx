@@ -6,17 +6,19 @@ import { usePathname } from "next/navigation";
 import { Home, Search, Mail, Plus, Users, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PostTradeDialog } from "./PostTradeDialog";
-
-const NAV_ITEMS = [
-  { icon: Home, label: "Home", href: "/dashboard" },
-  { icon: Users, label: "Groups", href: "/dashboard/groups" },
-  { icon: Mail, label: "Messages", href: "/dashboard/messages" },
-  { icon: Search, label: "Search", href: "/dashboard/search" },
-  { icon: User, label: "Profile", href: "/dashboard/profile/johndoe_trading" },
-];
+import { useAppData } from '@/context/app-data-context'
 
 export function MobileNav() {
+  const { userData } = useAppData();
   const pathname = usePathname();
+
+  const NAV_ITEMS = [
+    { icon: Home, label: "Home", href: "/dashboard" },
+    // { icon: Users, label: "Groups", href: "/dashboard/groups" },
+    // { icon: Mail, label: "Messages", href: "/dashboard/messages" },
+    { icon: Search, label: "Search", href: "/dashboard/search" },
+    { icon: User, label: "Profile", href: `/dashboard/profile/${userData?.username}` },
+  ];
 
   return (
     <>

@@ -3,14 +3,7 @@ import { createContext, useContext, ReactNode, useState, useEffect } from 'react
 import { useFirestore, useUser } from '@/firebase';
 import { User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-
-interface UserData {
-  uid: string;
-  email: string;
-  name: string;
-  username: string;
-  dateCreated: string;
-}
+import { UserData } from '@/models/user';
 
 interface AppDataContextValue {
   isLoaded: boolean;
@@ -42,7 +35,7 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
     getDoc(doc(firestore, `users/${user!.uid}`))
       .then((userDoc) => {
         if (userDoc.exists()) {
-          setUserData(userDoc.data() as UserData);
+          setUserData(UserData.fromSnapshot(userDoc));
         } else {
           setUserData(null);
         }

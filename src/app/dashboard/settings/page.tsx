@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { User, MapPin, Globe, AtSign, AlignLeft } from "lucide-react";
+import { User, MapPin, Globe, AtSign, AlignLeft, MailOpen } from "lucide-react";
 import { doc, setDoc } from "firebase/firestore";
 import { useFirestore } from "@/firebase";
 import { useAppData } from "@/context/app-data-context";
@@ -23,11 +23,12 @@ export default function SettingsPage() {
 
   // Local state for form fields
   const [formData, setFormData] = useState({
-    displayName: appData.userData?.name,
+    name: appData.userData?.name,
     username: appData.userData?.username,
-    // location: "Financial District, NY",
-    // bio: "Professional coffee drinker and part-time index trader.",
-    // websiteUrl: "https://tradestream.io",
+    robinhoodEmail: appData.userData?.robinhoodEmail,
+    location: appData.userData?.location,
+    bio: appData.userData?.bio,
+    websiteUrl: appData.userData?.website,
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -41,20 +42,18 @@ export default function SettingsPage() {
     setIsSaving(true);
 
     setDoc(doc(firestore,`users/${appData.userData?.uid}`), {
-      'displayName': formData.displayName,
+      'name': formData.name,
       'username': formData.username,
+      ...(formData.robinhoodEmail ? {"robinhoodEmail": formData.robinhoodEmail} : {}),
+      ...(formData.location ? {"location": formData.location} : {}),
+      ...(formData.bio ? {"bio": formData.bio} : {}),
+      ...(formData.websiteUrl ? {"website": formData.websiteUrl} : {}),
     }, {merge: true})
 
     toast({
       title: "Settings saved",
       description: "Your profile information has been updated successfully.",
     });
-
-    /* 
-    Real logic would go here:
-    - Update Firestore user document
-    - Update Firebase Auth profile if necessary
-    */
   };
 
   return (
@@ -85,14 +84,14 @@ export default function SettingsPage() {
               <CardContent className="px-0 space-y-6">
                 {/* Display Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="displayName" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                  <Label htmlFor="name" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
                     Display Name
                   </Label>
                   <div className="relative group">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                     <Input 
-                      id="displayName" 
-                      value={formData.displayName} 
+                      id="name" 
+                      value={formData.name} 
                       onChange={handleInputChange}
                       placeholder="Enter your name"
                       className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
@@ -117,8 +116,25 @@ export default function SettingsPage() {
                   </div>
                 </div>
 
+                {/* Robinhood Email */}
+                <div className="space-y-2">
+                  <Label htmlFor="robinhoodEmail" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                    Robinhood Email Address
+                  </Label>
+                  <div className="relative group">
+                    <MailOpen className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Input 
+                      id="robinhoodEmail" 
+                      value={formData.robinhoodEmail} 
+                      onChange={handleInputChange}
+                      placeholder="example@email.com"
+                      className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
+                    />
+                  </div>
+                </div>
+
                 {/* Location */}
-                {/* <div className="space-y-2">
+                <div className="space-y-2">
                   <Label htmlFor="location" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
                     Location
                   </Label>
@@ -132,10 +148,10 @@ export default function SettingsPage() {
                       className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
                     />
                   </div>
-                </div> */}
+                </div>
 
                 {/* Website URL */}
-                {/* <div className="space-y-2">
+                <div className="space-y-2">
                   <Label htmlFor="websiteUrl" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
                     Website
                   </Label>
@@ -149,10 +165,10 @@ export default function SettingsPage() {
                       className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary"
                     />
                   </div>
-                </div> */}
+                </div>
 
                 {/* Bio */}
-                {/* <div className="space-y-2">
+                <div className="space-y-2">
                   <Label htmlFor="bio" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
                     Bio
                   </Label>
@@ -166,7 +182,7 @@ export default function SettingsPage() {
                       className="pl-10 rounded-xl bg-muted/30 border-none focus-visible:ring-1 focus-visible:ring-primary min-h-[100px] resize-none"
                     />
                   </div>
-                </div> */}
+                </div>
               </CardContent>
               <CardFooter className="px-0 pt-6">
                 <Button 

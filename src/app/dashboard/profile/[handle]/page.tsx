@@ -16,20 +16,21 @@ import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useFirestore } from "@/firebase";
 import { Trade, User } from "@/lib/types";
 import { useAppData } from "@/context/app-data-context";
+import { UserData } from "@/models/user";
 
 export default function ProfilePage({ params }: { params: Promise<{ handle: string }> }) {
   const { handle } = use(params);
   const firestore = useFirestore();
   const appData = useAppData()
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
   const [userTrades, setUserTrades] = useState<Trade[]>([]);
   const [loading, setLoading] = useState(true);
+  const [followingTotal, setFollowingTotal] = useState(0);
+  const [followersTotal, setFollowersTotal] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(handle)
-
         // 🔹 Fetch user
         let userData = null;
         const usersRef = collection(firestore, "users");
@@ -37,20 +38,16 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
         const usersSnapshot = await getDocs(usersQuery);
 
         if (!usersSnapshot.empty) {
-          userData = usersSnapshot.docs[0].data() as User;
+          userData = UserData.fromSnapshot(usersSnapshot.docs[0]);
           setUser(userData);
         } else {
           setUser(null);
         }
 
-
         // 🔹 Fetch trades
         const tradesRef = collection(firestore, "trades");
-        const tradesQuery = query(tradesRef, where("user", "==", userData?.id));
+        const tradesQuery = query(tradesRef, where("user", "==", userData?.uid));
         const tradesSnapshot = await getDocs(tradesQuery);
-
-        console.log(tradesSnapshot)
-
 
         const trades: Trade[] = tradesSnapshot.docs.map(
           (doc) => doc.data() as Trade
@@ -119,7 +116,7 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
             <div className="h-32 sm:h-48 bg-muted" />
             <div className="absolute -bottom-16 left-4 border-4 border-white rounded-full">
               <Avatar className="h-24 w-24 sm:h-32 sm:w-32">
-                <AvatarImage src={user.avatar} />
+                {/* <AvatarImage src={user.avatar} /> */}
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
             </div>
@@ -153,7 +150,7 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
                 {user.name}
                 {user.verified && <Verified className="h-4 w-4 text-primary fill-primary text-primary-foreground" />}
               </h2>
-              <p className="text-muted-foreground text-sm">@{user.handle}</p>
+              <p className="text-muted-foreground text-sm">@{user.username}</p>
             </div>
 
             {user.bio && <p className="text-sm leading-relaxed">{user.bio}</p>}
@@ -161,25 +158,26 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <MapPin className="h-4 w-4" />
-                <span>Financial District</span>
+                <span>{user.location}</span>
               </div>
               <div className="flex items-center gap-1">
                 <LinkIcon className="h-4 w-4" />
-                <span className="text-primary hover:underline cursor-pointer">tradestream.io</span>
+                <span className="text-primary hover:underline cursor-pointer">{user.website}</span>
               </div>
+              <br/>
               <div className="flex items-center gap-1">
                 <CalendarDays className="h-4 w-4" />
-                <span>Joined {user.joinedDate ? format(new Date(user.joinedDate), "MMMM yyyy") : "February 2024"}</span>
+                <span>Joined {user.dateCreated ? format(new Date(user.dateCreated), "MMMM yyyy") : ""}</span>
               </div>
             </div>
 
             <div className="flex gap-4 text-sm">
               <div className="flex gap-1">
-                <span className="font-bold">{(user.following || 0).toLocaleString()}</span>
+                <span className="font-bold">{(followingTotal || 0).toLocaleString()}</span>
                 <span className="text-muted-foreground">Following</span>
               </div>
               <div className="flex gap-1">
-                <span className="font-bold">{(user.followers || 0).toLocaleString()}</span>
+                <span className="font-bold">{(followersTotal || 0).toLocaleString()}</span>
                 <span className="text-muted-foreground">Followers</span>
               </div>
             </div>

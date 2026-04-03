@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { addDoc, collection, CollectionReference, doc, DocumentReference, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { UserData } from "@/models/user";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -56,13 +57,8 @@ export default function SignupPage() {
     try {
       createUserWithEmailAndPassword(auth, email, password)
       .then((user) => {
-        setDoc(doc(firestore,`users/${user.user.uid}`), {
-          'uid': user.user.uid,
-          'email': email,
-          'name': name,
-          'username': username,
-          'dateCreated': new Date().getTime().toString(),
-        })
+        const newUser = new UserData({uid:user.user.uid, email:email, name:name, username:username, dateCreated:new Date().getTime(), dateCreatedString:new Date().toISOString()});
+        setDoc(doc(firestore,`users/${user.user.uid}`), newUser.toObject())
       })
       .catch(() => {
         throw new Error("AuthError");

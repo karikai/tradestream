@@ -1,6 +1,6 @@
 import { DocumentSnapshot } from 'firebase/firestore';
 
-export class User {
+export class UserData {
     uid: string;
     email: string;
     name: string;
@@ -25,7 +25,7 @@ export class User {
         bio = '',
         website = '',
         location = '',
-    }: Partial<User> = {}) {
+    }: Partial<UserData> = {}) {
         this.uid = uid;
         this.email = email;
         this.name = name;
@@ -39,9 +39,9 @@ export class User {
         this.location = location;
     }
 
-    static fromSnapshot(snapshot: DocumentSnapshot): User {
+    static fromSnapshot(snapshot: DocumentSnapshot): UserData {
         const data = snapshot.data() ?? {};
-        return new User({
+        return new UserData({
             uid: snapshot.id,
             email: data.email ?? '',
             name: data.name ?? '',

@@ -7,17 +7,19 @@ import { Home, Search, Bell, Mail, Bookmark, User, Settings, Zap, TrendingUp, Mo
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { PostTradeDialog } from "./PostTradeDialog";
-
-const NAV_ITEMS = [
-  { icon: Home, label: "Home", href: "/dashboard" },
-  { icon: Search, label: "Search", href: "/dashboard/search" },
-  { icon: Users, label: "Groups", href: "/dashboard/groups" },
-  { icon: User, label: "Profile", href: "/dashboard/profile/johndoe_trading" },
-  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
-];
+import { useAppData } from '@/context/app-data-context'
 
 export function SidebarNavigation() {
+  const { userData } = useAppData();
   const pathname = usePathname();
+
+  const NAV_ITEMS = [
+    { icon: Home, label: "Home", href: "/dashboard" },
+    { icon: Search, label: "Search", href: "/dashboard/search" },
+    { icon: Users, label: "Groups", href: "/dashboard/groups" },
+    { icon: User, label: "Profile", href: `/dashboard/profile/${userData?.username}` },
+    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+  ];
 
   return (
     <div className="h-full flex flex-col justify-between p-4 bg-background border-r border-border sticky top-0">

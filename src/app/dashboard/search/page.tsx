@@ -18,7 +18,7 @@ export default function SearchPage() {
   const filteredUsers = MOCK_USERS.filter(
     (user) =>
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.handle.toLowerCase().includes(searchQuery.toLowerCase())
+      user.username.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -47,19 +47,19 @@ export default function SearchPage() {
             {filteredUsers.length > 0 ? (
               filteredUsers.map((user) => (
                 <div
-                  key={user.id}
+                  key={user.uid}
                   className="p-4 flex items-start gap-3 hover:bg-muted/30 transition-colors group cursor-pointer"
                 >
-                  <Link href={`/dashboard/profile/${user.handle}`} className="shrink-0">
+                  <Link href={`/dashboard/profile/${user.username}`} className="shrink-0">
                     <Avatar className="h-12 w-12">
-                      <AvatarImage src={user.avatar} />
+                      {/* <AvatarImage src={user.avatar} /> */}
                       <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                   </Link>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <Link href={`/dashboard/profile/${user.handle}`} className="min-w-0">
+                      <Link href={`/dashboard/profile/${user.username}`} className="min-w-0">
                         <div className="flex items-center gap-0.5">
                           <span className="font-bold text-sm truncate hover:underline">
                             {user.name}
@@ -68,7 +68,7 @@ export default function SearchPage() {
                             <Verified className="h-3.5 w-3.5 text-primary fill-primary text-primary-foreground shrink-0" />
                           )}
                         </div>
-                        <p className="text-muted-foreground text-xs">@{user.handle}</p>
+                        <p className="text-muted-foreground text-xs">@{user.username}</p>
                       </Link>
                       <Button
                         size="sm"
@@ -83,8 +83,10 @@ export default function SearchPage() {
                       </p>
                     )}
                     <div className="flex gap-3 mt-2 text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
-                      <span>{user.followers?.toLocaleString()} Followers</span>
-                      <span>{user.following?.toLocaleString()} Following</span>
+                      {/* <span>{user.followers?.toLocaleString()} Followers</span> */}
+                      <span>{'23'} Followers</span>
+                      {/* <span>{user.following?.toLocaleString()} Following</span> */}
+                      <span>{'42'} Following</span>
                     </div>
                   </div>
                 </div>

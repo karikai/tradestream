@@ -8,12 +8,17 @@ import { formatDistanceToNow } from "date-fns";
 import { ArrowUpRight, ArrowDownRight, MessageSquare, Repeat2, Heart, Share, Verified, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { UserData } from "@/models/user";
+import { TradeData } from "@/models/trade";
 
 interface TradeCardProps {
-  trade: Trade;
+  trade: TradeData;
+  user: UserData;
 }
 
-export function TradeCard({ trade }: TradeCardProps) {
+export function TradeCard({ trade, user }: TradeCardProps) {
+
+
   const isCall = trade.optionType === "call";
   const isProfitable = (trade.profitAmount ?? 0) > 0;
   
@@ -23,24 +28,24 @@ export function TradeCard({ trade }: TradeCardProps) {
   return (
     <Card className="rounded-none border-x-0 border-t-0 shadow-none hover:bg-muted/10 transition-colors cursor-pointer p-4 group">
       <div className="flex gap-3">
-        <Link href={`/dashboard/profile/${trade.user.handle}`} className="shrink-0" onClick={(e) => e.stopPropagation()}>
+        <Link href={`/dashboard/profile/${user.username}`} className="shrink-0" onClick={(e) => e.stopPropagation()}>
           <Avatar className="h-10 w-10">
-            <AvatarImage src={trade.user.avatar} alt={trade.user.name} />
-            <AvatarFallback>{trade.user.name.charAt(0)}</AvatarFallback>
+            {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
+            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
         </Link>
         
         <div className="flex-1 space-y-1">
           <div className="flex items-center gap-1">
             <Link 
-              href={`/dashboard/profile/${trade.user.handle}`} 
+              href={`/dashboard/profile/${user.username}`} 
               className="font-bold text-sm hover:underline flex items-center gap-0.5"
               onClick={(e) => e.stopPropagation()}
             >
-              {trade.user.name}
-              {trade.user.verified && <Verified className="h-3.5 w-3.5 text-primary fill-primary text-primary-foreground" />}
+              {user.name}
+              {user.verified && <Verified className="h-3.5 w-3.5 text-primary fill-primary text-primary-foreground" />}
             </Link>
-            <span className="text-muted-foreground text-sm">@{trade.user.handle}</span>
+            <span className="text-muted-foreground text-sm">@{user.username}</span>
             <span className="text-muted-foreground text-sm">·</span>
             <span className="text-muted-foreground text-sm hover:underline">
               {formatDistanceToNow(new Date(trade.timestamp))} ago
@@ -57,7 +62,7 @@ export function TradeCard({ trade }: TradeCardProps) {
                 {trade.optionType}
               </Badge>
               <span className="text-xs font-bold tabular-nums">
-                ${trade.strikePrice} <span className="text-muted-foreground font-medium">EXP</span> {new Date(trade.expirationDate).toLocaleDateString()}
+                ${trade.strikePrice} <span className="text-muted-foreground font-medium">EXP</span> {new Date(trade.expirationDate).toLocaleDateString('en-US', { timeZone: 'UTC' })}
               </span>
             </div>
             

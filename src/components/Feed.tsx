@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MOCK_TRADES } from "@/lib/mock-data";
+import { MOCK_TRADES, MOCK_USERS } from "@/lib/mock-data";
 import { TradeCard } from "./TradeCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bell, Zap, LogOut } from "lucide-react";
@@ -91,7 +91,7 @@ export function Feed() {
           ))
         ) : (
           MOCK_TRADES.map((trade) => (
-            <TradeCard key={trade.id} trade={trade} />
+            <TradeCard key={trade.id} trade={trade} user={MOCK_USERS[0]} />
           ))
         )}
         

@@ -1,74 +1,94 @@
 import { DocumentSnapshot } from 'firebase/firestore';
 
-export class Trade {
+export class TradeData {
     id: string;
-    uid: string;
+    user: string;
     ticker: string;
-    option_type: string;
-    strike_price: number;
-    expiration_date: string;
-    contracts_purchased: number;
-    average_cost: number;
-    contracts_sold: number;
-    price_at_close: number;
+    optionType: "call" | "put";
+    strikePrice: number;
+    expirationDate: string;
+    contractsPurchased: number;
+    averageCost: number;
+    contractsSold: number;
+    priceAtClose: number;
+    profitAmount: number;
+    profitPercentage: number;
     timestamp: number;
+    sentiment: string;
+    groupId: string;
 
     constructor({
         id = '',
-        uid = '',
+        user = '',
         ticker = '',
-        option_type = '',
-        strike_price = 0,
-        expiration_date = '',
-        contracts_purchased = 0,
-        average_cost = 0,
-        contracts_sold = 0,
-        price_at_close = 0,
+        optionType = 'call' as "call" | "put",
+        strikePrice = 0,
+        expirationDate = '',
+        contractsPurchased = 0,
+        averageCost = 0,
+        contractsSold = 0,
+        priceAtClose = 0,
+        profitAmount = 0,
+        profitPercentage = 0,
         timestamp = 0,
-    }: Partial<Trade> = {}) {
+        sentiment = '',
+        groupId = '',
+    }: Partial<TradeData> = {}) {
         this.id = id;
-        this.uid = uid;
+        this.user = user;
         this.ticker = ticker;
-        this.option_type = option_type;
-        this.strike_price = strike_price;
-        this.expiration_date = expiration_date;
-        this.contracts_purchased = contracts_purchased;
-        this.average_cost = average_cost;
-        this.contracts_sold = contracts_sold;
-        this.price_at_close = price_at_close;
+        this.optionType = optionType;
+        this.strikePrice = strikePrice;
+        this.expirationDate = expirationDate;
+        this.contractsPurchased = contractsPurchased;
+        this.averageCost = averageCost;
+        this.contractsSold = contractsSold;
+        this.priceAtClose = priceAtClose;
+        this.profitAmount = profitAmount;
+        this.profitPercentage = profitPercentage;
         this.timestamp = timestamp;
+        this.sentiment = sentiment;
+        this.groupId = groupId;
     }
 
-    static fromSnapshot(snapshot: DocumentSnapshot): Trade {
+    static fromSnapshot(snapshot: DocumentSnapshot): TradeData {
         const data = snapshot.data() ?? {};
-        return new Trade({
+        return new TradeData({
             id: snapshot.id,
-            uid: data.uid ?? '',
+            user: data.user ?? '',
             ticker: data.ticker ?? '',
-            option_type: data.option_type ?? '',
-            strike_price: data.strike_price ?? 0,
-            expiration_date: data.expiration_date ?? '',
-            contracts_purchased: data.contracts_purchased ?? 0,
-            average_cost: data.average_cost ?? 0,
-            contracts_sold: data.contracts_sold ?? 0,
-            price_at_close: data.price_at_close ?? 0,
+            optionType: data.optionType ?? 'call',
+            strikePrice: data.strikePrice ?? 0,
+            expirationDate: data.expirationDate ?? '',
+            contractsPurchased: data.contractsPurchased ?? 0,
+            averageCost: data.averageCost ?? 0,
+            contractsSold: data.contractsSold ?? 0,
+            priceAtClose: data.priceAtClose ?? 0,
+            profitAmount: data.profitAmount ?? 0,
+            profitPercentage: data.profitPercentage ?? 0,
             timestamp: data.timestamp ?? 0,
+            sentiment: data.sentiment ?? '',
+            groupId: data.groupId ?? '',
         });
     }
 
     toObject(): Record<string, unknown> {
         return {
             id: this.id,
-            uid: this.uid,
+            user: this.user,
             ticker: this.ticker,
-            option_type: this.option_type,
-            strike_price: this.strike_price,
-            expiration_date: this.expiration_date,
-            contracts_purchased: this.contracts_purchased,
-            average_cost: this.average_cost,
-            contracts_sold: this.contracts_sold,
-            price_at_close: this.price_at_close,
+            optionType: this.optionType,
+            strikePrice: this.strikePrice,
+            expirationDate: this.expirationDate,
+            contractsPurchased: this.contractsPurchased,
+            averageCost: this.averageCost,
+            contractsSold: this.contractsSold,
+            priceAtClose: this.priceAtClose,
+            profitAmount: this.profitAmount,
+            profitPercentage: this.profitPercentage,
             timestamp: this.timestamp,
+            sentiment: this.sentiment,
+            groupId: this.groupId,
         };
     }
 }

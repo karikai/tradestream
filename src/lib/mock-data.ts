@@ -1,49 +1,78 @@
 
 import { Trade, User, Notification, MessageThread, Group, Membership } from './types';
 import { PlaceHolderImages } from './placeholder-images';
+import { UserData } from '@/models/user';
+import { TradeData } from '@/models/trade';
 
-export const MOCK_USERS: User[] = [
+
+export const MOCK_USERS: UserData[] = [
   {
-    id: 'u1',
+    uid: 'u1',
     name: 'Alex Rivera',
-    handle: 'arivera_trades',
-    avatar: PlaceHolderImages[0].imageUrl,
+    username: 'arivera_trades',
+    // avatar: PlaceHolderImages[0].imageUrl,
     verified: true,
     bio: 'Macro options trader focused on tech and energy sectors. 10 years in the game.',
-    joinedDate: '2021-03-12',
-    followers: 12400,
-    following: 156,
+    dateCreated: 1775235260499,
+    dateCreatedString: "2026-04-03T16:54:20.499Z",
+    website: 'tradestream.money',
+    robinhoodEmail: 'test@email.com',
+    email: '',
+    location: '',
+    toObject: function (): Record<string, unknown> {
+      throw new Error('Function not implemented.');
+    }
   },
   {
-    id: 'u2',
+    uid: 'u2',
     name: 'Sarah Chen',
-    handle: 'optionsqueen',
-    avatar: PlaceHolderImages[1].imageUrl,
+    username: 'optionsqueen',
+    // avatar: PlaceHolderImages[1].imageUrl,
     verified: true,
     bio: 'Volatility specialist. Selling premium and managing risk. I love iron condors.',
-    joinedDate: '2022-01-05',
-    followers: 8900,
-    following: 432,
+    dateCreated: 1775235260499,
+    dateCreatedString: "2026-04-03T16:54:20.499Z",
+    website: 'tradestream.money',
+    robinhoodEmail: 'test@email.com',
+    email: '',
+    location: '',
+    toObject: function (): Record<string, unknown> {
+      throw new Error('Function not implemented.');
+    }
   },
   {
-    id: 'u3',
+    uid: 'u3',
     name: 'Market Whiz',
-    handle: 'marketwhiz',
-    avatar: PlaceHolderImages[2].imageUrl,
+    username: 'marketwhiz',
+    // avatar: PlaceHolderImages[2].imageUrl,
     bio: 'Searching for whales and unusual options activity. Data-driven only.',
-    joinedDate: '2023-11-20',
-    followers: 3200,
-    following: 89,
+    dateCreated: 1775235260499,
+    dateCreatedString: "2026-04-03T16:54:20.499Z",
+    website: 'tradestream.money',
+    robinhoodEmail: 'test@email.com',
+    email: '',
+    verified: false,
+    location: '',
+    toObject: function (): Record<string, unknown> {
+      throw new Error('Function not implemented.');
+    }
   },
   {
-    id: 'u4',
+    uid: 'u4',
     name: 'John Doe',
-    handle: 'johndoe_trading',
-    avatar: 'https://picsum.photos/seed/jd/200/200',
+    username: 'johndoe_trading',
+    // avatar: 'https://picsum.photos/seed/jd/200/200',
     bio: 'Professional coffee drinker and part-time index trader.',
-    joinedDate: '2024-02-14',
-    followers: 120,
-    following: 45,
+    dateCreated: 1775235260499,
+    dateCreatedString: "2026-04-03T16:54:20.499Z",
+    website: 'tradestream.money',
+    robinhoodEmail: 'test@email.com',
+    email: '',
+    verified: false,
+    location: '',
+    toObject: function (): Record<string, unknown> {
+      throw new Error('Function not implemented.');
+    }
   }
 ];
 
@@ -77,10 +106,10 @@ export const MOCK_MEMBERSHIPS: Membership[] = [
   }
 ];
 
-export const MOCK_TRADES: Trade[] = [
+export const MOCK_TRADES: TradeData[] = [
   {
     id: 't1',
-    user: MOCK_USERS[0],
+    user: MOCK_USERS[0].uid,
     ticker: 'AAPL',
     optionType: 'call',
     strikePrice: 245,
@@ -91,12 +120,16 @@ export const MOCK_TRADES: Trade[] = [
     priceAtClose: 18.50,
     profitAmount: 30250,
     profitPercentage: 48.5,
-    timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+    timestamp: new Date(Date.now() - 1000 * 60 * 5).getUTCSeconds(),
     sentiment: 'bullish',
+    groupId: '',
+    toObject: function (): Record<string, unknown> {
+      throw new Error('Function not implemented.');
+    }
   },
   {
     id: 't2',
-    user: MOCK_USERS[1],
+    user: MOCK_USERS[1].uid,
     ticker: 'TSLA',
     optionType: 'put',
     strikePrice: 190,
@@ -107,12 +140,16 @@ export const MOCK_TRADES: Trade[] = [
     priceAtClose: 12.40,
     profitAmount: 42800,
     profitPercentage: 52.7,
-    timestamp: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
-    sentiment: 'bearish',
+    timestamp: new Date(Date.now() - 1000 * 60 * 12).getUTCSeconds(),
+    sentiment: 'bullish',
+    groupId: '',
+    toObject: function (): Record<string, unknown> {
+      throw new Error('Function not implemented.');
+    }
   },
   {
     id: 't3',
-    user: MOCK_USERS[2],
+    user: MOCK_USERS[2].uid,
     ticker: 'NVDA',
     optionType: 'call',
     strikePrice: 155,
@@ -123,35 +160,26 @@ export const MOCK_TRADES: Trade[] = [
     priceAtClose: 210.50,
     profitAmount: 97950,
     profitPercentage: 44.9,
-    timestamp: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
+    timestamp: new Date(Date.now() - 1000 * 60 * 25).getUTCSeconds(),
     sentiment: 'bullish',
+    groupId: '',
+    toObject: function (): Record<string, unknown> {
+      throw new Error('Function not implemented.');
+    }
   },
-  {
-    id: 't-g1-1',
-    user: MOCK_USERS[0],
-    ticker: 'TSLA',
-    optionType: 'call',
-    strikePrice: 250,
-    expirationDate: '2025-07-18',
-    contractsPurchased: 500,
-    averageCost: 15.20,
-    timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
-    sentiment: 'bullish',
-    groupId: 'g1',
-  },
-  {
-    id: 't-g1-2',
-    user: MOCK_USERS[0],
-    ticker: 'AMZN',
-    optionType: 'put',
-    strikePrice: 170,
-    expirationDate: '2025-05-30',
-    contractsPurchased: 120,
-    averageCost: 4.50,
-    timestamp: new Date(Date.now() - 1000 * 60 * 240).toISOString(),
-    sentiment: 'bearish',
-    groupId: 'g1',
-  }
+  // {
+  //   id: 't-g1-1',
+  //   user: MOCK_USERS[0].uid,
+  //   ticker: 'TSLA',
+  //   optionType: 'call',
+  //   strikePrice: 250,
+  //   expirationDate: '2025-07-18',
+  //   contractsPurchased: 500,
+  //   averageCost: 15.20,
+  //   timestamp: new Date(Date.now() - 1000 * 60 * 120).getUTCSeconds().toString(),
+  //   sentiment: 'bullish',
+  //   groupId: 'g1',
+  // },
 ];
 
 export const MOCK_NOTIFICATIONS: Notification[] = [
@@ -190,28 +218,28 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
   }
 ];
 
-export const MOCK_MESSAGE_THREADS: MessageThread[] = [
-  {
-    id: 'm1',
-    user: MOCK_USERS[0],
-    lastMessage: 'Did you see that volume on $NVDA calls? Absolute insanity.',
-    timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
-    unread: true,
-    messages: [
-      { id: 'ms1', senderId: 'u1', text: 'Hey, checking out the flow today?', timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString() },
-      { id: 'ms2', senderId: 'u4', text: 'Yeah, looks like heavy buying on tech.', timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString() },
-      { id: 'ms3', senderId: 'u1', text: 'Did you see that volume on $NVDA calls? Absolute insanity.', timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString() },
-    ]
-  },
-  {
-    id: 'm2',
-    user: MOCK_USERS[1],
-    lastMessage: 'The iron condor strategy is working perfectly in this range.',
-    timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
-    unread: false,
-    messages: [
-      { id: 'ms4', senderId: 'u2', text: 'Volatility is crushing right now.', timestamp: new Date(Date.now() - 1000 * 60 * 150).toISOString() },
-      { id: 'ms5', senderId: 'u2', text: 'The iron condor strategy is working perfectly in this range.', timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString() },
-    ]
-  }
-];
+// export const MOCK_MESSAGE_THREADS: MessageThread[] = [
+//   {
+//     id: 'm1',
+//     user: MOCK_USERS[0],
+//     lastMessage: 'Did you see that volume on $NVDA calls? Absolute insanity.',
+//     timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+//     unread: true,
+//     messages: [
+//       { id: 'ms1', senderId: 'u1', text: 'Hey, checking out the flow today?', timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString() },
+//       { id: 'ms2', senderId: 'u4', text: 'Yeah, looks like heavy buying on tech.', timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString() },
+//       { id: 'ms3', senderId: 'u1', text: 'Did you see that volume on $NVDA calls? Absolute insanity.', timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString() },
+//     ]
+//   },
+//   {
+//     id: 'm2',
+//     user: MOCK_USERS[1],
+//     lastMessage: 'The iron condor strategy is working perfectly in this range.',
+//     timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+//     unread: false,
+//     messages: [
+//       { id: 'ms4', senderId: 'u2', text: 'Volatility is crushing right now.', timestamp: new Date(Date.now() - 1000 * 60 * 150).toISOString() },
+//       { id: 'ms5', senderId: 'u2', text: 'The iron condor strategy is working perfectly in this range.', timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString() },
+//     ]
+//   }
+// ];

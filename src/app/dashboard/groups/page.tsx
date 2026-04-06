@@ -61,7 +61,7 @@ export default function GroupsPage() {
                                     {group.name}
                                   </h3>
                                   <p className="text-xs text-muted-foreground flex items-center gap-1 mb-1">
-                                    by <span className="font-bold text-primary">@{group.creator.handle}</span>
+                                    by <span className="font-bold text-primary">@{group.creator.username}</span>
                                     {group.creator.verified && <Verified className="h-3.5 w-3.5 text-primary fill-primary text-primary-foreground" />}
                                   </p>
                                 </div>
@@ -109,7 +109,7 @@ export default function GroupsPage() {
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-bold truncate">{group.name}</h3>
-                        <p className="text-xs text-muted-foreground truncate">@{group.creator.handle}</p>
+                        <p className="text-xs text-muted-foreground truncate">@{group.creator.username}</p>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge variant="outline" className="text-[10px] font-black border-primary/20 text-primary">
                             ${group.monthlyPrice}/mo

@@ -4,7 +4,7 @@ import { use, useEffect, useState } from "react";
 import { SidebarNavigation } from "@/components/SidebarNavigation";
 import { RightSidebar } from "@/components/RightSidebar";
 import { MobileNav } from "@/components/MobileNav";
-import { MOCK_USERS, MOCK_TRADES, MOCK_GROUPS } from "@/lib/mock-data";
+import { MOCK_USERS, MOCK_TRADES } from "@/lib/mock-data";
 import { TradeCard } from "@/components/TradeCard";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -69,7 +69,7 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
     fetchData();
   }, [handle, firestore]);
 
-  const group = MOCK_GROUPS.find(g => g.creator.handle.toLowerCase() === handle.toLowerCase());
+  // const group = MOCK_GROUPS.find(g => g.creator.handle.toLowerCase() === handle.toLowerCase());
   const isMe = handle.toLowerCase() === appData.userData?.username
 
   if (!user) {
@@ -128,17 +128,18 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
                   </Link>
                 </Button>
               ) : (
-                <>
-                  <Button variant="outline" className="rounded-full font-bold hover:bg-muted/30 transition-colors">Follow</Button>
-                  {group && (
-                    <Link href={`/dashboard/checkout/${group.id}`}>
-                      <Button className="rounded-full font-bold bg-primary hover:bg-primary/90 gap-2">
-                        <Lock className="h-4 w-4" />
-                        Join Group
-                      </Button>
-                    </Link>
-                  )}
-                </>
+                <p className="text-sm text-muted-foreground">This is {user.name}'s profile</p>
+                // <>
+                //   <Button variant="outline" className="rounded-full font-bold hover:bg-muted/30 transition-colors">Follow</Button>
+                //   {group && (
+                //     <Link href={`/dashboard/checkout/${group.id}`}>
+                //       <Button className="rounded-full font-bold bg-primary hover:bg-primary/90 gap-2">
+                //         <Lock className="h-4 w-4" />
+                //         Join Group
+                //       </Button>
+                //     </Link>
+                //   )}
+                // </>
               )}
             </div>
           </div>
@@ -193,12 +194,6 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
                 Trades
               </TabsTrigger>
               <TabsTrigger 
-                value="replies" 
-                className="flex-1 h-full rounded-none border-b-2 border-transparent data-[state=active]:bg-transparent data-[state=active]:border-primary data-[state=active]:shadow-none font-bold text-muted-foreground data-[state=active]:text-foreground"
-              >
-                Replies
-              </TabsTrigger>
-              <TabsTrigger 
                 value="likes" 
                 className="flex-1 h-full rounded-none border-b-2 border-transparent data-[state=active]:bg-transparent data-[state=active]:border-primary data-[state=active]:shadow-none font-bold text-muted-foreground data-[state=active]:text-foreground"
               >
@@ -208,16 +203,13 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
             <TabsContent value="trades" className="m-0 divide-y divide-border">
               {userTrades.length > 0 ? (
                 userTrades.map((trade) => (
-                  <TradeCard key={trade.id} trade={trade} />
+                  <TradeCard key={trade.id} trade={trade} user={user} />
                 ))
               ) : (
                 <div className="p-12 text-center text-muted-foreground">
                   No trades posted yet.
                 </div>
               )}
-            </TabsContent>
-            <TabsContent value="replies" className="m-0 p-12 text-center text-muted-foreground">
-              No replies found.
             </TabsContent>
             <TabsContent value="likes" className="m-0 p-12 text-center text-muted-foreground">
               No liked trades found.

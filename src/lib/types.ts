@@ -1,3 +1,4 @@
+import { UserData } from "@/models/user";
 
 export type OptionType = 'call' | 'put';
 
@@ -17,7 +18,7 @@ export interface Group {
   id: string;
   name: string;
   description: string;
-  creator: User;
+  creator: UserData;
   monthlyPrice: number;
   avatar: string;
   memberCount: number;
@@ -53,7 +54,7 @@ export type NotificationType = 'like' | 'repost' | 'follow' | 'system';
 export interface Notification {
   id: string;
   type: NotificationType;
-  user?: User;
+  user?: UserData;
   message: string;
   timestamp: string;
   read: boolean;

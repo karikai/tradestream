@@ -70,7 +70,7 @@ export interface Message {
 
 export interface MessageThread {
   id: string;
-  user: User;
+  user: UserData;
   lastMessage: string;
   timestamp: string;
   unread: boolean;

@@ -218,28 +218,28 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
   }
 ];
 
-// export const MOCK_MESSAGE_THREADS: MessageThread[] = [
-//   {
-//     id: 'm1',
-//     user: MOCK_USERS[0],
-//     lastMessage: 'Did you see that volume on $NVDA calls? Absolute insanity.',
-//     timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
-//     unread: true,
-//     messages: [
-//       { id: 'ms1', senderId: 'u1', text: 'Hey, checking out the flow today?', timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString() },
-//       { id: 'ms2', senderId: 'u4', text: 'Yeah, looks like heavy buying on tech.', timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString() },
-//       { id: 'ms3', senderId: 'u1', text: 'Did you see that volume on $NVDA calls? Absolute insanity.', timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString() },
-//     ]
-//   },
-//   {
-//     id: 'm2',
-//     user: MOCK_USERS[1],
-//     lastMessage: 'The iron condor strategy is working perfectly in this range.',
-//     timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
-//     unread: false,
-//     messages: [
-//       { id: 'ms4', senderId: 'u2', text: 'Volatility is crushing right now.', timestamp: new Date(Date.now() - 1000 * 60 * 150).toISOString() },
-//       { id: 'ms5', senderId: 'u2', text: 'The iron condor strategy is working perfectly in this range.', timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString() },
-//     ]
-//   }
-// ];
+export const MOCK_MESSAGE_THREADS: MessageThread[] = [
+  {
+    id: 'm1',
+    user: MOCK_USERS[0],
+    lastMessage: 'Did you see that volume on $NVDA calls? Absolute insanity.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    unread: true,
+    messages: [
+      { id: 'ms1', senderId: 'u1', text: 'Hey, checking out the flow today?', timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString() },
+      { id: 'ms2', senderId: 'u4', text: 'Yeah, looks like heavy buying on tech.', timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString() },
+      { id: 'ms3', senderId: 'u1', text: 'Did you see that volume on $NVDA calls? Absolute insanity.', timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString() },
+    ]
+  },
+  {
+    id: 'm2',
+    user: MOCK_USERS[1],
+    lastMessage: 'The iron condor strategy is working perfectly in this range.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+    unread: false,
+    messages: [
+      { id: 'ms4', senderId: 'u2', text: 'Volatility is crushing right now.', timestamp: new Date(Date.now() - 1000 * 60 * 150).toISOString() },
+      { id: 'ms5', senderId: 'u2', text: 'The iron condor strategy is working perfectly in this range.', timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString() },
+    ]
+  }
+];

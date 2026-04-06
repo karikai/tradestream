@@ -50,7 +50,7 @@ export default function MessagesPage() {
                   )}
                 >
                   <Avatar className="h-12 w-12 shrink-0">
-                    <AvatarImage src={thread.user.avatar} />
+                    {/* <AvatarImage src={thread.user.avatar} /> */}
                     <AvatarFallback>{thread.user.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                   
@@ -59,7 +59,7 @@ export default function MessagesPage() {
                       <div className="flex items-center gap-1 min-w-0">
                         <span className="font-bold text-sm truncate">{thread.user.name}</span>
                         {thread.user.verified && <Verified className="h-3.5 w-3.5 text-primary fill-primary text-primary-foreground" />}
-                        <span className="text-muted-foreground text-xs truncate">@{thread.user.handle}</span>
+                        <span className="text-muted-foreground text-xs truncate">@{thread.user.username}</span>
                       </div>
                       <span className="text-xs text-muted-foreground whitespace-nowrap">
                         {formatDistanceToNow(new Date(thread.timestamp), { addSuffix: false })}

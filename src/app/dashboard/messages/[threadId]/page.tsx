@@ -2,9 +2,9 @@
 "use client";
 
 import { use, useState, useEffect } from "react";
-import { SidebarNavigation } from "@/SidebarNavigation";
-import { RightSidebar } from "@/RightSidebar";
-import { MobileNav } from "@/MobileNav";
+// import { SidebarNavigation } from "@/SidebarNavigation";
+// import { RightSidebar } from "@/RightSidebar";
+// import { MobileNav } from "@/MobileNav";
 import { MOCK_MESSAGE_THREADS, MOCK_USERS } from "@/lib/mock-data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ import { MobileNav as BottomMobileNav } from "@/components/MobileNav";
 export default function MessageThreadPage({ params }: { params: Promise<{ threadId: string }> }) {
   const { threadId } = use(params);
   const thread = MOCK_MESSAGE_THREADS.find(t => t.id === threadId);
-  const currentUser = MOCK_USERS.find(u => u.id === 'u4'); // Assuming John Doe is the current user
+  const currentUser = MOCK_USERS.find(u => u.uid === 'u4'); // Assuming John Doe is the current user
 
   const [newMessage, setNewMessage] = useState("");
 
@@ -59,7 +59,7 @@ export default function MessageThreadPage({ params }: { params: Promise<{ thread
               </Link>
               <div className="flex items-center gap-3">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={thread.user.avatar} />
+                  {/* <AvatarImage src={thread.user.avatar} /> */}
                   <AvatarFallback>{thread.user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>
@@ -67,7 +67,7 @@ export default function MessageThreadPage({ params }: { params: Promise<{ thread
                     {thread.user.name}
                     {thread.user.verified && <Verified className="h-3.5 w-3.5 text-primary fill-primary text-primary-foreground" />}
                   </h1>
-                  <p className="text-[10px] text-muted-foreground">@{thread.user.handle}</p>
+                  <p className="text-[10px] text-muted-foreground">@{thread.user.username}</p>
                 </div>
               </div>
             </div>
@@ -80,19 +80,19 @@ export default function MessageThreadPage({ params }: { params: Promise<{ thread
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/30">
             <div className="flex flex-col items-center py-8 space-y-2 border-b border-border mb-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage src={thread.user.avatar} />
+                {/* <AvatarImage src={thread.user.avatar} /> */}
                 <AvatarFallback>{thread.user.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="text-center">
                 <p className="font-black text-lg">{thread.user.name}</p>
-                <p className="text-muted-foreground text-sm">@{thread.user.handle}</p>
+                <p className="text-muted-foreground text-sm">@{thread.user.username}</p>
                 <p className="text-xs text-muted-foreground mt-2 max-w-[200px] mx-auto">{thread.user.bio}</p>
-                <p className="text-[10px] text-muted-foreground mt-1">Joined {thread.user.joinedDate}</p>
+                <p className="text-[10px] text-muted-foreground mt-1">Joined {thread.user.dateCreated}</p>
               </div>
             </div>
 
             {thread.messages.map((msg) => {
-              const isMe = msg.senderId === currentUser?.id;
+              const isMe = msg.senderId === currentUser?.uid;
               return (
                 <div 
                   key={msg.id} 

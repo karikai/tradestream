@@ -12,7 +12,7 @@ import { UserData } from "@/models/user";
 import { TradeData } from "@/models/trade";
 
 interface TradeCardProps {
-  trade: TradeData;
+  trade: Trade;
   user: UserData;
 }
 

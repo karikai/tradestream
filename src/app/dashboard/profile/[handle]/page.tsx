@@ -49,9 +49,9 @@ export default function ProfilePage({ params }: { params: Promise<{ handle: stri
         const tradesQuery = query(tradesRef, where("user", "==", userData?.uid));
         const tradesSnapshot = await getDocs(tradesQuery);
 
-        const trades: Trade[] = tradesSnapshot.docs.map(
-          (doc) => doc.data() as Trade
-        );
+        const trades: Trade[] = tradesSnapshot.docs
+        .map((doc) => doc.data() as Trade)
+        .sort((a, b) => new Date(b.timestamp).getUTCDate() - new Date(a.timestamp).getUTCDate())
 
         trades.forEach((trade) => {
           //@ts-ignore
